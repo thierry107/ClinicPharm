@@ -1,5 +1,5 @@
 /**
- * ClinicPharm Enterprise SaaS - Seed Mock Data
+ * Curis Health - Seed Mock Data
  * Structured as clean JSON/Objects to easily mirror future database tables in Supabase
  */
 
@@ -8,7 +8,7 @@ export const INITIAL_DATA = {
   currentUser: {
     id: "usr-001",
     name: "Dr. Sarah Jenkins",
-    email: "s.jenkins@clinicpharm.com",
+    email: "s.jenkins@curishealth.co.ke",
     role: "admin", // 'patient', 'doctor', 'admin'
     avatar: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=200",
     title: "Chief Medical Officer & Administrator"
@@ -21,9 +21,9 @@ export const INITIAL_DATA = {
       name: "Arthur Pendelton",
       age: 45,
       gender: "Male",
-      phone: "+1 (555) 234-5678",
+      phone: "+254 722 123 456",
       email: "arthur.p@example.com",
-      address: "42 Oakridge Lane, Springfield",
+      address: "Kilimani, Nairobi",
       bloodGroup: "O+",
       allergies: ["Penicillin", "Dust Mites"],
       medicalHistory: "Hypertension (diagnosed 2021), Mild Asthma",
@@ -36,9 +36,9 @@ export const INITIAL_DATA = {
       name: "Elena Rostova",
       age: 32,
       gender: "Female",
-      phone: "+1 (555) 876-5432",
+      phone: "+254 733 987 654",
       email: "elena.r@example.com",
-      address: "88 Sunset Blvd, Apt 4B",
+      address: "Westlands, Nairobi",
       bloodGroup: "A-",
       allergies: ["Sulfa Drugs"],
       medicalHistory: "Type 2 Diabetes Mellitus",
@@ -51,9 +51,9 @@ export const INITIAL_DATA = {
       name: "Marcus Vance",
       age: 58,
       gender: "Male",
-      phone: "+1 (555) 345-6789",
+      phone: "+254 711 456 789",
       email: "marcus.vance@example.com",
-      address: "12 Highland Ave",
+      address: "Milimani, Nakuru",
       bloodGroup: "B+",
       allergies: ["None"],
       medicalHistory: "Osteoarthritis, High Cholesterol",
@@ -66,9 +66,9 @@ export const INITIAL_DATA = {
       name: "Sophia Chen",
       age: 27,
       gender: "Female",
-      phone: "+1 (555) 901-2345",
+      phone: "+254 700 321 654",
       email: "sophia.chen@example.com",
-      address: "704 University Way",
+      address: "Nyali, Mombasa",
       bloodGroup: "AB+",
       allergies: ["Aspirin", "Peanuts"],
       medicalHistory: "Seasonal Allergies",
@@ -85,8 +85,8 @@ export const INITIAL_DATA = {
       name: "Dr. Sarah Jenkins",
       role: "doctor",
       specialty: "General Medicine / Internal Practitioner",
-      phone: "+1 (555) 111-2233",
-      email: "s.jenkins@clinicpharm.com",
+      phone: "+254 720 111 222",
+      email: "s.jenkins@curishealth.co.ke",
       status: "On Duty"
     },
     {
@@ -94,17 +94,17 @@ export const INITIAL_DATA = {
       name: "Dr. Robert Vance",
       role: "doctor",
       specialty: "Pediatrics & Family Health",
-      phone: "+1 (555) 444-5566",
-      email: "r.vance@clinicpharm.com",
+      phone: "+254 721 333 444",
+      email: "r.vance@curishealth.co.ke",
       status: "On Duty"
     },
     {
       id: "pharm-01",
-      name: "Pharmacist David Kim",
+      name: "Chemist David Kim",
       role: "chemist",
-      specialty: "Chief Pharmacist & Inventory Lead",
-      phone: "+1 (555) 777-8899",
-      email: "d.kim@clinicpharm.com",
+      specialty: "Chief Chemist & Inventory Lead",
+      phone: "+254 722 555 666",
+      email: "d.kim@curishealth.co.ke",
       status: "On Duty"
     }
   ],
@@ -117,7 +117,7 @@ export const INITIAL_DATA = {
       patientName: "Arthur Pendelton",
       doctorId: "doc-01",
       doctorName: "Dr. Sarah Jenkins",
-      date: "2026-09-15",
+      date: "2026-09-16",
       time: "09:30 AM",
       type: "Routine Checkup",
       status: "Completed",
@@ -129,7 +129,7 @@ export const INITIAL_DATA = {
       patientName: "Elena Rostova",
       doctorId: "doc-01",
       doctorName: "Dr. Sarah Jenkins",
-      date: "2026-09-15",
+      date: "2026-09-16",
       time: "11:00 AM",
       type: "Consultation",
       status: "In Consultation",
@@ -141,7 +141,7 @@ export const INITIAL_DATA = {
       patientName: "Marcus Vance",
       doctorId: "doc-02",
       doctorName: "Dr. Robert Vance",
-      date: "2026-09-15",
+      date: "2026-09-16",
       time: "02:15 PM",
       type: "Follow-up",
       status: "Scheduled",
@@ -153,7 +153,7 @@ export const INITIAL_DATA = {
       patientName: "Sophia Chen",
       doctorId: "doc-01",
       doctorName: "Dr. Sarah Jenkins",
-      date: "2026-09-16",
+      date: "2026-09-17",
       time: "10:00 AM",
       type: "General Checkup",
       status: "Scheduled",
@@ -170,10 +170,10 @@ export const INITIAL_DATA = {
       patientName: "Arthur Pendelton",
       doctorId: "doc-01",
       doctorName: "Dr. Sarah Jenkins",
-      date: "2026-09-15",
+      date: "2026-09-16",
       symptoms: "Mild headache, fatigue",
       diagnosis: "Essential Hypertension - Mild Spike",
-      notes: "Patient advised sodium reduction and continued daily exercise.",
+      notes: "Doctor recorded consultation findings. Patient advised sodium reduction and continued daily exercise.",
       prescriptionId: "rx-801"
     }
   ],
@@ -187,7 +187,7 @@ export const INITIAL_DATA = {
       patientName: "Arthur Pendelton",
       doctorId: "doc-01",
       doctorName: "Dr. Sarah Jenkins",
-      date: "2026-09-15",
+      date: "2026-09-16",
       status: "Pending Dispense", // 'Pending Dispense', 'Dispensed', 'Cancelled'
       items: [
         {
@@ -197,7 +197,7 @@ export const INITIAL_DATA = {
           frequency: "Three times daily (TID)",
           duration: "7 days",
           quantity: 21,
-          unitPrice: 0.75,
+          unitPrice: 120.00,
           instructions: "Take after meals with water."
         },
         {
@@ -207,7 +207,7 @@ export const INITIAL_DATA = {
           frequency: "Once daily (QD)",
           duration: "30 days",
           quantity: 30,
-          unitPrice: 0.40,
+          unitPrice: 60.00,
           instructions: "Take in the morning."
         }
       ]
@@ -219,7 +219,7 @@ export const INITIAL_DATA = {
       patientName: "Elena Rostova",
       doctorId: "doc-01",
       doctorName: "Dr. Sarah Jenkins",
-      date: "2026-09-14",
+      date: "2026-09-15",
       status: "Dispensed",
       items: [
         {
@@ -229,14 +229,14 @@ export const INITIAL_DATA = {
           frequency: "Twice daily (BID)",
           duration: "30 days",
           quantity: 60,
-          unitPrice: 0.30,
+          unitPrice: 45.00,
           instructions: "Take during meals."
         }
       ]
     }
   ],
 
-  // Medicines / Pharmacy Inventory Table
+  // Medicines / Chemist Inventory Table
   medicines: [
     {
       id: "med-01",
@@ -245,11 +245,11 @@ export const INITIAL_DATA = {
       sku: "MED-AMX-500",
       stock: 140,
       minReorderLevel: 50,
-      unitPrice: 0.75,
-      costPrice: 0.40,
+      unitPrice: 120.00,
+      costPrice: 70.00,
       batchNo: "BT-2024-88A",
       expiryDate: "2027-06-30",
-      supplier: "GlobalPharma Distributors",
+      supplier: "Harleys Pharma Distributors",
       description: "Broad-spectrum penicillin antibiotic."
     },
     {
@@ -259,11 +259,11 @@ export const INITIAL_DATA = {
       sku: "MED-MTF-850",
       stock: 220,
       minReorderLevel: 80,
-      unitPrice: 0.30,
-      costPrice: 0.15,
+      unitPrice: 45.00,
+      costPrice: 25.00,
       batchNo: "BT-2024-91B",
       expiryDate: "2027-11-15",
-      supplier: "MediCare Supply Co.",
+      supplier: "Crown Healthcare Kenya",
       description: "First-line medication for type 2 diabetes."
     },
     {
@@ -273,11 +273,11 @@ export const INITIAL_DATA = {
       sku: "MED-LSP-010",
       stock: 18, // Low Stock Alert!
       minReorderLevel: 40,
-      unitPrice: 0.40,
-      costPrice: 0.20,
+      unitPrice: 60.00,
+      costPrice: 35.00,
       batchNo: "BT-2024-44C",
       expiryDate: "2026-12-01",
-      supplier: "GlobalPharma Distributors",
+      supplier: "Harleys Pharma Distributors",
       description: "ACE inhibitor used to treat high blood pressure."
     },
     {
@@ -287,11 +287,11 @@ export const INITIAL_DATA = {
       sku: "MED-IBU-400",
       stock: 450,
       minReorderLevel: 100,
-      unitPrice: 0.25,
-      costPrice: 0.10,
+      unitPrice: 30.00,
+      costPrice: 15.00,
       batchNo: "BT-2025-05D",
       expiryDate: "2028-02-28",
-      supplier: "Apex BioLabs",
+      supplier: "Laborex Kenya Ltd",
       description: "Nonsteroidal anti-inflammatory medication."
     },
     {
@@ -301,11 +301,11 @@ export const INITIAL_DATA = {
       sku: "MED-SLB-100",
       stock: 8, // Low Stock Alert!
       minReorderLevel: 15,
-      unitPrice: 12.50,
-      costPrice: 7.80,
+      unitPrice: 850.00,
+      costPrice: 550.00,
       batchNo: "BT-2024-19E",
       expiryDate: "2026-10-31",
-      supplier: "MediCare Supply Co.",
+      supplier: "Crown Healthcare Kenya",
       description: "Short-acting beta-2 adrenergic agonist for asthma relief."
     },
     {
@@ -315,11 +315,11 @@ export const INITIAL_DATA = {
       sku: "MED-ATV-020",
       stock: 190,
       minReorderLevel: 60,
-      unitPrice: 0.85,
-      costPrice: 0.45,
+      unitPrice: 150.00,
+      costPrice: 90.00,
       batchNo: "BT-2025-12F",
       expiryDate: "2027-08-15",
-      supplier: "GlobalPharma Distributors",
+      supplier: "Harleys Pharma Distributors",
       description: "Statin medication used to prevent cardiovascular disease."
     }
   ],
@@ -328,29 +328,29 @@ export const INITIAL_DATA = {
   suppliers: [
     {
       id: "sup-01",
-      name: "GlobalPharma Distributors",
-      contactPerson: "Mark Hastings",
-      phone: "+1 (800) 555-0199",
-      email: "orders@globalpharma.com",
-      leadTimeDays: 3,
+      name: "Harleys Pharma Distributors",
+      contactPerson: "James Ochieng",
+      phone: "+254 722 000 111",
+      email: "orders@harleys.co.ke",
+      leadTimeDays: 2,
       rating: "4.9/5"
     },
     {
       id: "sup-02",
-      name: "MediCare Supply Co.",
-      contactPerson: "Elena Vance",
-      phone: "+1 (800) 555-0288",
-      email: "supply@medicare.com",
+      name: "Crown Healthcare Kenya",
+      contactPerson: "Grace Wanjiku",
+      phone: "+254 733 222 333",
+      email: "supply@crownhealth.co.ke",
       leadTimeDays: 2,
       rating: "4.8/5"
     },
     {
       id: "sup-03",
-      name: "Apex BioLabs",
-      contactPerson: "Dr. Alan Grant",
-      phone: "+1 (800) 555-0377",
-      email: "sales@apexbiolabs.com",
-      leadTimeDays: 5,
+      name: "Laborex Kenya Ltd",
+      contactPerson: "Peter Kiprop",
+      phone: "+254 711 444 555",
+      email: "sales@laborex.co.ke",
+      leadTimeDays: 3,
       rating: "4.7/5"
     }
   ],
@@ -360,20 +360,20 @@ export const INITIAL_DATA = {
     {
       id: "sal-901",
       receiptNo: "REC-2026-00901",
-      date: "2026-09-14",
+      date: "2026-09-15",
       time: "02:45 PM",
       patientName: "Elena Rostova",
       prescriptionId: "rx-802",
       items: [
-        { medicineName: "Metformin 850mg", qty: 60, price: 0.30, total: 18.00 }
+        { medicineName: "Metformin 850mg", qty: 60, price: 45.00, total: 2700.00 }
       ],
-      subtotal: 18.00,
+      subtotal: 2700.00,
       discount: 0.00,
-      tax: 1.44,
-      totalAmount: 19.44,
+      tax: 216.00,
+      totalAmount: 2916.00,
       paymentMethod: "Mobile Money (MPesa)",
       paymentStatus: "Paid",
-      processedBy: "Pharmacist David Kim"
+      processedBy: "Chemist David Kim"
     }
   ]
 };

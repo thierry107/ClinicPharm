@@ -1,5 +1,5 @@
 /**
- * ClinicPharm Enterprise SaaS - Point of Sale (POS), Billing & Receipt Generator
+ * Curis Health - Point of Sale (POS), Billing & Receipt Generator
  */
 
 import { store } from './store.js';
@@ -14,8 +14,8 @@ export function renderPosView(container, role) {
   container.innerHTML = `
     <div style="margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
       <div>
-        <h2 style="font-size: 1.75rem; font-weight: 800;">Pharmacy Point of Sale (POS) & Billing</h2>
-        <p style="color: var(--text-secondary); font-size: 0.9rem;">Fast dispensing checkout, prescription auto-fill, and printable receipts.</p>
+        <h2 style="font-size: 1.75rem; font-weight: 800;">Chemist Point of Sale (POS) & Billing</h2>
+        <p style="color: var(--text-secondary); font-size: 0.9rem;">Fast dispensing checkout, prescription auto-fill, and printable receipts in KSh.</p>
       </div>
       <button class="btn btn-secondary" id="btn-clear-cart"><i class="fa-solid fa-rotate-left"></i> Reset Cart</button>
     </div>
@@ -75,15 +75,15 @@ export function renderPosView(container, role) {
         <div style="font-size: 0.9rem; display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.25rem;">
           <div style="display: flex; justify-content: space-between; color: var(--text-secondary);">
             <span>Subtotal:</span>
-            <span id="pos-subtotal">$0.00</span>
+            <span id="pos-subtotal">KSh 0.00</span>
           </div>
           <div style="display: flex; justify-content: space-between; color: var(--text-secondary);">
             <span>Tax (8%):</span>
-            <span id="pos-tax">$0.00</span>
+            <span id="pos-tax">KSh 0.00</span>
           </div>
           <div style="display: flex; justify-content: space-between; font-weight: 800; font-size: 1.25rem; color: var(--emerald); border-top: 1px solid var(--border-color); padding-top: 0.5rem;">
             <span>Total Amount:</span>
-            <span id="pos-total">$0.00</span>
+            <span id="pos-total">KSh 0.00</span>
           </div>
         </div>
 
@@ -91,8 +91,8 @@ export function renderPosView(container, role) {
         <div class="form-group">
           <label>Payment Method</label>
           <select id="pos-payment-method">
-            <option value="Cash">Cash Payment</option>
             <option value="Mobile Money (MPesa)">Mobile Money (MPesa Simulator)</option>
+            <option value="Cash">Cash Payment</option>
             <option value="Insurance Claim">Insurance Claim</option>
             <option value="Credit / Debit Card">Credit / Debit Card</option>
           </select>
@@ -159,7 +159,7 @@ function renderPosMedCards(medicines) {
       <div style="font-weight: 700; font-size: 0.95rem; margin-bottom: 0.25rem;">${m.name}</div>
       <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.75rem;">${m.category} • Stock: <strong>${m.stock}</strong></div>
       <div style="display: flex; justify-content: space-between; align-items: center;">
-        <span style="font-weight: 800; color: var(--emerald); font-size: 1.1rem;">$${m.unitPrice.toFixed(2)}</span>
+        <span style="font-weight: 800; color: var(--emerald); font-size: 1.1rem;">KSh ${m.unitPrice.toFixed(2)}</span>
         <button class="btn btn-sm btn-cyan"><i class="fa-solid fa-plus"></i> Add</button>
       </div>
     </div>
@@ -213,9 +213,9 @@ function updateCartUI() {
   if (currentCart.length === 0) {
     cartBody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: var(--text-muted); padding: 2rem;">Cart is empty. Click medicines on the left to add.</td></tr>`;
     if (itemCountEl) itemCountEl.textContent = '0 items';
-    if (subtotalEl) subtotalEl.textContent = '$0.00';
-    if (taxEl) taxEl.textContent = '$0.00';
-    if (totalEl) totalEl.textContent = '$0.00';
+    if (subtotalEl) subtotalEl.textContent = 'KSh 0.00';
+    if (taxEl) taxEl.textContent = 'KSh 0.00';
+    if (totalEl) totalEl.textContent = 'KSh 0.00';
     return;
   }
 
@@ -223,7 +223,7 @@ function updateCartUI() {
     <tr style="border-bottom: 1px solid var(--border-color);">
       <td style="padding: 0.5rem 0; font-weight: 600;">${item.medicineName}</td>
       <td style="padding: 0.5rem 0; text-align: center;">${item.qty}</td>
-      <td style="padding: 0.5rem 0; text-align: right; color: var(--emerald); font-weight: 700;">$${item.total.toFixed(2)}</td>
+      <td style="padding: 0.5rem 0; text-align: right; color: var(--emerald); font-weight: 700;">KSh ${item.total.toFixed(2)}</td>
       <td style="padding: 0.5rem 0; text-align: right;">
         <button style="background:none; border:none; color:var(--rose); cursor:pointer;" onclick="window.removeCartItem(${index})"><i class="fa-solid fa-trash"></i></button>
       </td>
@@ -235,9 +235,9 @@ function updateCartUI() {
   const total = Math.round((subtotal + tax) * 100) / 100;
 
   if (itemCountEl) itemCountEl.textContent = `${currentCart.reduce((s, i) => s + i.qty, 0)} items`;
-  if (subtotalEl) subtotalEl.textContent = `$${subtotal.toFixed(2)}`;
-  if (taxEl) taxEl.textContent = `$${tax.toFixed(2)}`;
-  if (totalEl) totalEl.textContent = `$${total.toFixed(2)}`;
+  if (subtotalEl) subtotalEl.textContent = `KSh ${subtotal.toFixed(2)}`;
+  if (taxEl) taxEl.textContent = `KSh ${tax.toFixed(2)}`;
+  if (totalEl) totalEl.textContent = `KSh ${total.toFixed(2)}`;
 }
 
 window.removeCartItem = (index) => {
@@ -251,8 +251,8 @@ function openReceiptModal(sale) {
 
   area.innerHTML = `
     <div style="text-align: center; border-bottom: 2px dashed #333; padding-bottom: 1rem; margin-bottom: 1rem;">
-      <h2 style="font-weight: 800; font-size: 1.4rem;">CLINICPHARM ENTERPRISE</h2>
-      <p style="font-size: 0.85rem;">Clinic & Chemist Management System</p>
+      <h2 style="font-weight: 800; font-size: 1.4rem;">CURIS HEALTH KENYA</h2>
+      <p style="font-size: 0.85rem;">Integrated Clinic & Chemist Platform</p>
       <div style="font-size: 0.8rem; margin-top: 0.5rem;">Receipt No: <strong>${sale.receiptNo}</strong></div>
       <div style="font-size: 0.8rem;">Date: ${sale.date} • Time: ${sale.time}</div>
     </div>
@@ -268,7 +268,7 @@ function openReceiptModal(sale) {
         <tr style="border-bottom: 1px solid #333; text-align: left;">
           <th style="padding: 0.3rem 0;">Item</th>
           <th style="padding: 0.3rem 0; text-align: center;">Qty</th>
-          <th style="padding: 0.3rem 0; text-align: right;">Price</th>
+          <th style="padding: 0.3rem 0; text-align: right;">Price (KSh)</th>
         </tr>
       </thead>
       <tbody>
@@ -276,22 +276,22 @@ function openReceiptModal(sale) {
           <tr style="border-bottom: 1px solid #eee;">
             <td style="padding: 0.4rem 0;">${item.medicineName}</td>
             <td style="padding: 0.4rem 0; text-align: center;">${item.qty}</td>
-            <td style="padding: 0.4rem 0; text-align: right;">$${item.total.toFixed(2)}</td>
+            <td style="padding: 0.4rem 0; text-align: right;">KSh ${item.total.toFixed(2)}</td>
           </tr>
         `).join('')}
       </tbody>
     </table>
 
     <div style="font-size: 0.9rem; border-top: 2px dashed #333; padding-top: 0.75rem;">
-      <div style="display: flex; justify-content: space-between;"><span>Subtotal:</span><span>$${sale.subtotal.toFixed(2)}</span></div>
-      <div style="display: flex; justify-content: space-between;"><span>Tax (8%):</span><span>$${sale.tax.toFixed(2)}</span></div>
+      <div style="display: flex; justify-content: space-between;"><span>Subtotal:</span><span>KSh ${sale.subtotal.toFixed(2)}</span></div>
+      <div style="display: flex; justify-content: space-between;"><span>Tax (8%):</span><span>KSh ${sale.tax.toFixed(2)}</span></div>
       <div style="display: flex; justify-content: space-between; font-weight: 800; font-size: 1.1rem; margin-top: 0.5rem;">
-        <span>TOTAL PAID:</span><span>$${sale.totalAmount.toFixed(2)}</span>
+        <span>TOTAL PAID:</span><span>KSh ${sale.totalAmount.toFixed(2)}</span>
       </div>
     </div>
 
     <div style="text-align: center; font-size: 0.8rem; margin-top: 1.5rem; color: #555;">
-      Thank you for choosing ClinicPharm Enterprise!
+      Thank you for choosing Curis Health!
     </div>
   `;
 

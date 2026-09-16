@@ -1,5 +1,5 @@
 /**
- * ClinicPharm Enterprise SaaS - Financial & Operational Analytics Module
+ * Curis Health - Financial & Operational Analytics Module
  */
 
 import { store } from './store.js';
@@ -16,7 +16,7 @@ export function renderAnalyticsView(container, role) {
     <div style="margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
       <div>
         <h2 style="font-size: 1.75rem; font-weight: 800;">Operational Analytics & Financial Ledger</h2>
-        <p style="color: var(--text-secondary); font-size: 0.9rem;">Overview of clinic patient metrics, chemist sales, and inventory performance.</p>
+        <p style="color: var(--text-secondary); font-size: 0.9rem;">Overview of clinic patient metrics, chemist sales, and inventory performance in Kenyan Shillings (KSh).</p>
       </div>
     </div>
 
@@ -25,7 +25,7 @@ export function renderAnalyticsView(container, role) {
       <div class="kpi-card">
         <div>
           <div class="kpi-title">Total Gross Revenue</div>
-          <div class="kpi-value" style="color:var(--emerald);">$${totalRevenue.toFixed(2)}</div>
+          <div class="kpi-value" style="color:var(--emerald);">KSh ${totalRevenue.toFixed(2)}</div>
         </div>
         <div class="kpi-icon" style="background:var(--emerald-glow); color:var(--emerald);"><i class="fa-solid fa-chart-line"></i></div>
       </div>
@@ -79,7 +79,7 @@ export function renderAnalyticsView(container, role) {
               <td style="font-weight: 600;">${s.patientName}</td>
               <td>${s.items.length} items</td>
               <td><span class="status-badge active">${s.paymentMethod}</span></td>
-              <td style="font-weight: 700; color: var(--emerald);">$${s.totalAmount.toFixed(2)}</td>
+              <td style="font-weight: 700; color: var(--emerald);">KSh ${s.totalAmount.toFixed(2)}</td>
               <td><span class="status-badge paid">${s.paymentStatus}</span></td>
             </tr>
           `).join('')}

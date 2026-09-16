@@ -1,5 +1,5 @@
 /**
- * ClinicPharm Enterprise SaaS - Prescription & Chemist Dispensing Queue Module
+ * Curis Health - Prescription & Chemist Dispensing Queue Module
  */
 
 import { store } from './store.js';
@@ -96,7 +96,7 @@ function bindRxActionListeners() {
 window.dispenseRxDirect = (rxId) => {
   const result = store.dispensePrescription(rxId, 'Cash');
   if (result.success) {
-    alert(`✅ SUCCESS:\n${result.message}\nReceipt No: ${result.sale.receiptNo}\nTotal Charged: $${result.sale.totalAmount.toFixed(2)}`);
+    alert(`✅ SUCCESS:\n${result.message}\nReceipt No: ${result.sale.receiptNo}\nTotal Charged: KSh ${result.sale.totalAmount.toFixed(2)}`);
     window.location.hash = ''; // Trigger re-render
     store.notify();
   } else {
@@ -113,7 +113,7 @@ function openCreateRxModal() {
     patientSelect.innerHTML = store.getPatients().map(p => `<option value="${p.id}" data-name="${p.name}">${p.name}</option>`).join('');
   }
   if (medSelect) {
-    medSelect.innerHTML = store.getMedicines().map(m => `<option value="${m.id}" data-name="${m.name}" data-price="${m.unitPrice}">${m.name} (Stock: ${m.stock}, $${m.unitPrice.toFixed(2)})</option>`).join('');
+    medSelect.innerHTML = store.getMedicines().map(m => `<option value="${m.id}" data-name="${m.name}" data-price="${m.unitPrice}">${m.name} (Stock: ${m.stock}, KSh ${m.unitPrice.toFixed(2)})</option>`).join('');
   }
 
   if (modal) modal.classList.add('active');

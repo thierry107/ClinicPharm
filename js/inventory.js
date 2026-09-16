@@ -1,5 +1,5 @@
 /**
- * ClinicPharm Enterprise SaaS - Pharmacy Inventory & Medicines Module
+ * Curis Health - Chemist Inventory & Medicines Module
  */
 
 import { store } from './store.js';
@@ -134,7 +134,7 @@ function renderInventoryRows(medicines, role) {
           </span>
           ${isLow ? `<span class="status-badge low-stock" style="margin-left:0.4rem;">Low Stock</span>` : ''}
         </td>
-        <td style="font-weight: 700; color: var(--emerald);">$${m.unitPrice.toFixed(2)}</td>
+        <td style="font-weight: 700; color: var(--emerald);">KSh ${m.unitPrice.toFixed(2)}</td>
         <td style="font-size: 0.825rem; color: var(--text-secondary);">${m.expiryDate}</td>
         <td style="font-size: 0.85rem; color: var(--text-muted);">${m.supplier}</td>
         <td>

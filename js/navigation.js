@@ -1,5 +1,5 @@
 /**
- * ClinicPharm Enterprise SaaS - Navigation & SPA View Router
+ * Curis Health - Navigation & SPA View Router
  */
 
 import { store } from './store.js';
@@ -216,9 +216,9 @@ function renderDashboardView(container, role) {
       <div class="kpi-card">
         <div>
           <div class="kpi-title">Chemist Daily Sales</div>
-          <div class="kpi-value" style="color:var(--emerald);">$${todayRevenue.toFixed(2)}</div>
+          <div class="kpi-value" style="color:var(--emerald);">KSh ${todayRevenue.toFixed(2)}</div>
         </div>
-        <div class="kpi-icon" style="background:var(--emerald-glow); color:var(--emerald);"><i class="fa-solid fa-dollar-sign"></i></div>
+        <div class="kpi-icon" style="background:var(--emerald-glow); color:var(--emerald);"><i class="fa-solid fa-coins"></i></div>
       </div>
       <div class="kpi-card">
         <div>
@@ -241,7 +241,7 @@ function renderDashboardView(container, role) {
     <div style="margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
       <div>
         <h2 style="font-size: 1.75rem; font-weight: 800;">Welcome back, ${store.getCurrentUser().name}</h2>
-        <p style="color: var(--text-secondary); font-size: 0.9rem;">Here is your live Clinic & Chemist operational summary.</p>
+        <p style="color: var(--text-secondary); font-size: 0.9rem;">Live Clinic & Chemist operational summary.</p>
       </div>
       ${role === 'admin' ? `
         <div style="display: flex; gap: 0.75rem;">

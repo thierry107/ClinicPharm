@@ -1,5 +1,5 @@
 /**
- * ClinicPharm Enterprise SaaS - Public Landing Page Logic
+ * Curis Health - Public Landing Page Logic
  */
 
 import { store } from './store.js';
@@ -18,7 +18,7 @@ export function renderPublicMedicines() {
     <div class="feature-card">
       <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;">
         <span class="status-badge active">${med.category}</span>
-        <span style="font-weight: 700; color: var(--emerald); font-size: 1.1rem;">$${med.unitPrice.toFixed(2)}</span>
+        <span style="font-weight: 700; color: var(--emerald); font-size: 1.1rem;">KSh ${med.unitPrice.toFixed(2)}</span>
       </div>
       <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">${med.name}</h3>
       <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">${med.description}</p>
