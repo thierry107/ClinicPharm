@@ -1,0 +1,379 @@
+/**
+ * ClinicPharm Enterprise SaaS - Seed Mock Data
+ * Structured as clean JSON/Objects to easily mirror future database tables in Supabase
+ */
+
+export const INITIAL_DATA = {
+  // Current active user & session simulation
+  currentUser: {
+    id: "usr-001",
+    name: "Dr. Sarah Jenkins",
+    email: "s.jenkins@clinicpharm.com",
+    role: "admin", // 'patient', 'doctor', 'admin'
+    avatar: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=200",
+    title: "Chief Medical Officer & Administrator"
+  },
+
+  // Patients Table
+  patients: [
+    {
+      id: "pat-101",
+      name: "Arthur Pendelton",
+      age: 45,
+      gender: "Male",
+      phone: "+1 (555) 234-5678",
+      email: "arthur.p@example.com",
+      address: "42 Oakridge Lane, Springfield",
+      bloodGroup: "O+",
+      allergies: ["Penicillin", "Dust Mites"],
+      medicalHistory: "Hypertension (diagnosed 2021), Mild Asthma",
+      vitals: { bp: "128/84", pulse: 72, temp: "36.8°C", weight: "78 kg" },
+      registeredDate: "2024-01-15",
+      status: "Active"
+    },
+    {
+      id: "pat-102",
+      name: "Elena Rostova",
+      age: 32,
+      gender: "Female",
+      phone: "+1 (555) 876-5432",
+      email: "elena.r@example.com",
+      address: "88 Sunset Blvd, Apt 4B",
+      bloodGroup: "A-",
+      allergies: ["Sulfa Drugs"],
+      medicalHistory: "Type 2 Diabetes Mellitus",
+      vitals: { bp: "118/76", pulse: 68, temp: "36.6°C", weight: "62 kg" },
+      registeredDate: "2024-02-10",
+      status: "Active"
+    },
+    {
+      id: "pat-103",
+      name: "Marcus Vance",
+      age: 58,
+      gender: "Male",
+      phone: "+1 (555) 345-6789",
+      email: "marcus.vance@example.com",
+      address: "12 Highland Ave",
+      bloodGroup: "B+",
+      allergies: ["None"],
+      medicalHistory: "Osteoarthritis, High Cholesterol",
+      vitals: { bp: "135/88", pulse: 76, temp: "37.0°C", weight: "85 kg" },
+      registeredDate: "2024-03-01",
+      status: "Active"
+    },
+    {
+      id: "pat-104",
+      name: "Sophia Chen",
+      age: 27,
+      gender: "Female",
+      phone: "+1 (555) 901-2345",
+      email: "sophia.chen@example.com",
+      address: "704 University Way",
+      bloodGroup: "AB+",
+      allergies: ["Aspirin", "Peanuts"],
+      medicalHistory: "Seasonal Allergies",
+      vitals: { bp: "112/70", pulse: 65, temp: "36.5°C", weight: "54 kg" },
+      registeredDate: "2024-04-12",
+      status: "Active"
+    }
+  ],
+
+  // Staff / Doctors Table
+  staff: [
+    {
+      id: "doc-01",
+      name: "Dr. Sarah Jenkins",
+      role: "doctor",
+      specialty: "General Medicine / Internal Practitioner",
+      phone: "+1 (555) 111-2233",
+      email: "s.jenkins@clinicpharm.com",
+      status: "On Duty"
+    },
+    {
+      id: "doc-02",
+      name: "Dr. Robert Vance",
+      role: "doctor",
+      specialty: "Pediatrics & Family Health",
+      phone: "+1 (555) 444-5566",
+      email: "r.vance@clinicpharm.com",
+      status: "On Duty"
+    },
+    {
+      id: "pharm-01",
+      name: "Pharmacist David Kim",
+      role: "chemist",
+      specialty: "Chief Pharmacist & Inventory Lead",
+      phone: "+1 (555) 777-8899",
+      email: "d.kim@clinicpharm.com",
+      status: "On Duty"
+    }
+  ],
+
+  // Appointments Table
+  appointments: [
+    {
+      id: "apt-301",
+      patientId: "pat-101",
+      patientName: "Arthur Pendelton",
+      doctorId: "doc-01",
+      doctorName: "Dr. Sarah Jenkins",
+      date: "2026-09-15",
+      time: "09:30 AM",
+      type: "Routine Checkup",
+      status: "Completed",
+      notes: "Follow-up on hypertension management."
+    },
+    {
+      id: "apt-302",
+      patientId: "pat-102",
+      patientName: "Elena Rostova",
+      doctorId: "doc-01",
+      doctorName: "Dr. Sarah Jenkins",
+      date: "2026-09-15",
+      time: "11:00 AM",
+      type: "Consultation",
+      status: "In Consultation",
+      notes: "Blood glucose review and dietary guidance."
+    },
+    {
+      id: "apt-303",
+      patientId: "pat-103",
+      patientName: "Marcus Vance",
+      doctorId: "doc-02",
+      doctorName: "Dr. Robert Vance",
+      date: "2026-09-15",
+      time: "02:15 PM",
+      type: "Follow-up",
+      status: "Scheduled",
+      notes: "Knee joint stiffness and pain evaluation."
+    },
+    {
+      id: "apt-304",
+      patientId: "pat-104",
+      patientName: "Sophia Chen",
+      doctorId: "doc-01",
+      doctorName: "Dr. Sarah Jenkins",
+      date: "2026-09-16",
+      time: "10:00 AM",
+      type: "General Checkup",
+      status: "Scheduled",
+      notes: "Annual physical wellness exam."
+    }
+  ],
+
+  // Consultations Table
+  consultations: [
+    {
+      id: "con-501",
+      appointmentId: "apt-301",
+      patientId: "pat-101",
+      patientName: "Arthur Pendelton",
+      doctorId: "doc-01",
+      doctorName: "Dr. Sarah Jenkins",
+      date: "2026-09-15",
+      symptoms: "Mild headache, fatigue",
+      diagnosis: "Essential Hypertension - Mild Spike",
+      notes: "Patient advised sodium reduction and continued daily exercise.",
+      prescriptionId: "rx-801"
+    }
+  ],
+
+  // Prescriptions Table (Bridge between Clinic & Chemist)
+  prescriptions: [
+    {
+      id: "rx-801",
+      consultationId: "con-501",
+      patientId: "pat-101",
+      patientName: "Arthur Pendelton",
+      doctorId: "doc-01",
+      doctorName: "Dr. Sarah Jenkins",
+      date: "2026-09-15",
+      status: "Pending Dispense", // 'Pending Dispense', 'Dispensed', 'Cancelled'
+      items: [
+        {
+          medicineId: "med-01",
+          medicineName: "Amoxicillin 500mg",
+          dosage: "1 capsule",
+          frequency: "Three times daily (TID)",
+          duration: "7 days",
+          quantity: 21,
+          unitPrice: 0.75,
+          instructions: "Take after meals with water."
+        },
+        {
+          medicineId: "med-03",
+          medicineName: "Lisinopril 10mg",
+          dosage: "1 tablet",
+          frequency: "Once daily (QD)",
+          duration: "30 days",
+          quantity: 30,
+          unitPrice: 0.40,
+          instructions: "Take in the morning."
+        }
+      ]
+    },
+    {
+      id: "rx-802",
+      consultationId: "con-500",
+      patientId: "pat-102",
+      patientName: "Elena Rostova",
+      doctorId: "doc-01",
+      doctorName: "Dr. Sarah Jenkins",
+      date: "2026-09-14",
+      status: "Dispensed",
+      items: [
+        {
+          medicineId: "med-02",
+          medicineName: "Metformin 850mg",
+          dosage: "1 tablet",
+          frequency: "Twice daily (BID)",
+          duration: "30 days",
+          quantity: 60,
+          unitPrice: 0.30,
+          instructions: "Take during meals."
+        }
+      ]
+    }
+  ],
+
+  // Medicines / Pharmacy Inventory Table
+  medicines: [
+    {
+      id: "med-01",
+      name: "Amoxicillin 500mg",
+      category: "Antibiotics",
+      sku: "MED-AMX-500",
+      stock: 140,
+      minReorderLevel: 50,
+      unitPrice: 0.75,
+      costPrice: 0.40,
+      batchNo: "BT-2024-88A",
+      expiryDate: "2027-06-30",
+      supplier: "GlobalPharma Distributors",
+      description: "Broad-spectrum penicillin antibiotic."
+    },
+    {
+      id: "med-02",
+      name: "Metformin 850mg",
+      category: "Antidiabetic",
+      sku: "MED-MTF-850",
+      stock: 220,
+      minReorderLevel: 80,
+      unitPrice: 0.30,
+      costPrice: 0.15,
+      batchNo: "BT-2024-91B",
+      expiryDate: "2027-11-15",
+      supplier: "MediCare Supply Co.",
+      description: "First-line medication for type 2 diabetes."
+    },
+    {
+      id: "med-03",
+      name: "Lisinopril 10mg",
+      category: "Cardiovascular",
+      sku: "MED-LSP-010",
+      stock: 18, // Low Stock Alert!
+      minReorderLevel: 40,
+      unitPrice: 0.40,
+      costPrice: 0.20,
+      batchNo: "BT-2024-44C",
+      expiryDate: "2026-12-01",
+      supplier: "GlobalPharma Distributors",
+      description: "ACE inhibitor used to treat high blood pressure."
+    },
+    {
+      id: "med-04",
+      name: "Ibuprofen 400mg",
+      category: "Analgesics & NSAIDs",
+      sku: "MED-IBU-400",
+      stock: 450,
+      minReorderLevel: 100,
+      unitPrice: 0.25,
+      costPrice: 0.10,
+      batchNo: "BT-2025-05D",
+      expiryDate: "2028-02-28",
+      supplier: "Apex BioLabs",
+      description: "Nonsteroidal anti-inflammatory medication."
+    },
+    {
+      id: "med-05",
+      name: "Salbutamol Inhaler 100mcg",
+      category: "Respiratory",
+      sku: "MED-SLB-100",
+      stock: 8, // Low Stock Alert!
+      minReorderLevel: 15,
+      unitPrice: 12.50,
+      costPrice: 7.80,
+      batchNo: "BT-2024-19E",
+      expiryDate: "2026-10-31",
+      supplier: "MediCare Supply Co.",
+      description: "Short-acting beta-2 adrenergic agonist for asthma relief."
+    },
+    {
+      id: "med-06",
+      name: "Atorvastatin 20mg",
+      category: "Cardiovascular",
+      sku: "MED-ATV-020",
+      stock: 190,
+      minReorderLevel: 60,
+      unitPrice: 0.85,
+      costPrice: 0.45,
+      batchNo: "BT-2025-12F",
+      expiryDate: "2027-08-15",
+      supplier: "GlobalPharma Distributors",
+      description: "Statin medication used to prevent cardiovascular disease."
+    }
+  ],
+
+  // Suppliers Table
+  suppliers: [
+    {
+      id: "sup-01",
+      name: "GlobalPharma Distributors",
+      contactPerson: "Mark Hastings",
+      phone: "+1 (800) 555-0199",
+      email: "orders@globalpharma.com",
+      leadTimeDays: 3,
+      rating: "4.9/5"
+    },
+    {
+      id: "sup-02",
+      name: "MediCare Supply Co.",
+      contactPerson: "Elena Vance",
+      phone: "+1 (800) 555-0288",
+      email: "supply@medicare.com",
+      leadTimeDays: 2,
+      rating: "4.8/5"
+    },
+    {
+      id: "sup-03",
+      name: "Apex BioLabs",
+      contactPerson: "Dr. Alan Grant",
+      phone: "+1 (800) 555-0377",
+      email: "sales@apexbiolabs.com",
+      leadTimeDays: 5,
+      rating: "4.7/5"
+    }
+  ],
+
+  // Sales / POS Transactions Table
+  sales: [
+    {
+      id: "sal-901",
+      receiptNo: "REC-2026-00901",
+      date: "2026-09-14",
+      time: "02:45 PM",
+      patientName: "Elena Rostova",
+      prescriptionId: "rx-802",
+      items: [
+        { medicineName: "Metformin 850mg", qty: 60, price: 0.30, total: 18.00 }
+      ],
+      subtotal: 18.00,
+      discount: 0.00,
+      tax: 1.44,
+      totalAmount: 19.44,
+      paymentMethod: "Mobile Money (MPesa)",
+      paymentStatus: "Paid",
+      processedBy: "Pharmacist David Kim"
+    }
+  ]
+};

@@ -1,0 +1,78 @@
+/* ==========================================================================
+   ClinicPharm Enterprise SaaS - Responsive Polish & Viewport Adaptations
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+  .hero-section {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 3rem 1.5rem 2rem;
+  }
+
+  .grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .dashboard-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .saas-container {
+    flex-direction: column;
+  }
+
+  .saas-sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .sidebar-menu {
+    flex-direction: row;
+    overflow-x: auto;
+    padding: 0.5rem;
+  }
+
+  .sidebar-link {
+    white-space: nowrap;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.825rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .public-navbar {
+    padding: 0.75rem 1rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .public-nav-links {
+    display: none; /* Mobile menu collapsed for clean look */
+  }
+
+  .hero-title {
+    font-size: 2.25rem;
+  }
+
+  .grid-3 {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .topbar-search {
+    width: 100%;
+  }
+
+  .modal-container {
+    margin: 1rem;
+    max-height: 95vh;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}

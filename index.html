@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ClinicPharm Enterprise - All-in-one Clinic & Chemist Management SaaS Platform. Streamline patient records, doctor consultations, prescription dispensing, inventory, POS sales, and analytics.">
+  <title>ClinicPharm Enterprise | Unified Clinic & Chemist SaaS</title>
+
+  <!-- Google Fonts & FontAwesome 6 Icons CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Master Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <div id="app-root">
+
+    <!-- ==========================================================================
+         1. PUBLIC LANDING WEBSITE VIEW
+         ========================================================================== -->
+    <div id="public-website-view">
+      <!-- Public Navbar -->
+      <nav class="public-navbar">
+        <div class="brand-logo">
+          <div class="brand-icon"><i class="fa-solid fa-hospital-user"></i></div>
+          <span>ClinicPharm <span style="color:var(--emerald);">Enterprise</span></span>
+        </div>
+
+        <ul class="public-nav-links">
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#workflow">How It Works</a></li>
+          <li><a href="#medicines">Medicines</a></li>
+        </ul>
+
+        <div class="auth-btn-group">
+          <button class="btn btn-secondary" data-action="open-login"><i class="fa-solid fa-right-to-bracket"></i> Login</button>
+          <button class="btn btn-primary" data-action="open-register"><i class="fa-solid fa-user-plus"></i> Register SaaS</button>
+        </div>
+      </nav>
+
+      <!-- Hero Section -->
+      <section id="hero" class="hero-section">
+        <div>
+          <div class="hero-badge">
+            <i class="fa-solid fa-bolt"></i> Next-Gen Medical & Pharmacy SaaS
+          </div>
+          <h1 class="hero-title">
+            One Unified Platform for <span class="gradient-text">Clinic & Chemist</span> Operations
+          </h1>
+          <p class="hero-subtitle">
+            Seamlessly connect Patient Records, Doctor Appointments, Clinical Consultations, Prescription Dispensing, Chemist Inventory, and POS Sales in one powerful dashboard.
+          </p>
+          <div class="hero-cta">
+            <button class="btn btn-primary" data-action="open-login" style="padding: 0.85rem 1.75rem; font-size: 1rem;">
+              <i class="fa-solid fa-gauge-high"></i> Launch Live SaaS Demo
+            </button>
+            <a href="#workflow" class="btn btn-secondary" style="padding: 0.85rem 1.5rem; font-size: 1rem;">
+              <i class="fa-solid fa-play"></i> See Workflow
+            </a>
+          </div>
+        </div>
+
+        <!-- Glass Preview Card -->
+        <div class="hero-preview-card">
+          <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 1rem; color: var(--emerald);">
+            <i class="fa-solid fa-link"></i> Clinic-to-Chemist Connected Flow
+          </h3>
+          <div class="preview-workflow-step">
+            <div class="workflow-step-num">1</div>
+            <div>
+              <div style="font-weight: 700; font-size: 0.9rem;">Patient Consultation & Vitals</div>
+              <div style="font-size: 0.8rem; color: var(--text-secondary);">Doctor diagnoses and creates digital prescription.</div>
+            </div>
+          </div>
+          <div class="preview-workflow-step">
+            <div class="workflow-step-num" style="background:var(--cyan);">2</div>
+            <div>
+              <div style="font-weight: 700; font-size: 0.9rem;">Chemist Dispensing Queue</div>
+              <div style="font-size: 0.8rem; color: var(--text-secondary);">Prescription instantly appears in pharmacist queue.</div>
+            </div>
+          </div>
+          <div class="preview-workflow-step">
+            <div class="workflow-step-num" style="background:var(--amber);">3</div>
+            <div>
+              <div style="font-weight: 700; font-size: 0.9rem;">Auto Inventory Stock Deduction</div>
+              <div style="font-size: 0.8rem; color: var(--text-secondary);">Stock decreases automatically with expiry/batch check.</div>
+            </div>
+          </div>
+          <div class="preview-workflow-step">
+            <div class="workflow-step-num" style="background:var(--indigo); color:#fff;">4</div>
+            <div>
+              <div style="font-weight: 700; font-size: 0.9rem;">POS Checkout & Receipt</div>
+              <div style="font-size: 0.8rem; color: var(--text-secondary);">Generate sales invoice with printable receipt.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Features Section -->
+      <section id="features" class="features-section">
+        <div class="section-header">
+          <h2 class="section-title">Built for Modern Healthcare Providers</h2>
+          <p class="section-desc">Designed with 3 role-based interfaces for Patients, Doctors/Staff, and System Administrators.</p>
+        </div>
+
+        <div class="grid-3">
+          <div class="feature-card">
+            <div class="feature-icon-box"><i class="fa-solid fa-user-doctor"></i></div>
+            <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">Clinical Consultations</h3>
+            <p style="font-size: 0.9rem; color: var(--text-secondary);">Record patient symptoms, diagnoses, vital signs, and issue prescriptions with a single click.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon-box" style="background:var(--cyan-glow); color:var(--cyan);"><i class="fa-solid fa-boxes-stacked"></i></div>
+            <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">Chemist Stock Management</h3>
+            <p style="font-size: 0.9rem; color: var(--text-secondary);">Real-time stock monitoring, batch numbers, low stock alerts, and supplier order tracking.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon-box" style="background:var(--amber-glow); color:var(--amber);"><i class="fa-solid fa-cash-register"></i></div>
+            <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">Pharmacy POS & Billing</h3>
+            <p style="font-size: 0.9rem; color: var(--text-secondary);">Fast barcode & search checkout, tax/discount calculation, and formatted printable customer receipts.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Public Medicine Preview Section -->
+      <section id="medicines" class="medicine-public-section">
+        <div class="section-header">
+          <h2 class="section-title">Pharmaceutical Catalog Preview</h2>
+          <p class="section-desc">Live drug database updated in real-time from the chemist inventory.</p>
+        </div>
+        <div class="grid-3" id="public-medicines-grid">
+          <!-- Dynamically populated by public.js -->
+        </div>
+      </section>
+
+      <!-- Public Footer -->
+      <footer class="public-footer">
+        <div class="footer-content">
+          <div class="brand-logo">
+            <div class="brand-icon"><i class="fa-solid fa-hospital-user"></i></div>
+            <span>ClinicPharm Enterprise</span>
+          </div>
+          <div style="font-size: 0.9rem; color: var(--text-secondary);">
+            Academic SaaS Architecture Demonstration • Supabase Integration Ready
+          </div>
+        </div>
+        <div class="footer-bottom">
+          &copy; 2026 ClinicPharm Enterprise. All rights reserved.
+        </div>
+      </footer>
+    </div>
+
+    <!-- ==========================================================================
+         2. SAAS DASHBOARD APPLICATION VIEW (SPA)
+         ========================================================================== -->
+    <div id="saas-app-view" style="display: none; flex-direction: column; width: 100vw; min-height: 100vh;">
+      
+      <!-- Top Demo Role Switcher Bar -->
+      <div class="demo-role-bar">
+        <div>
+          <i class="fa-solid fa-flask" style="color:var(--indigo);"></i> <strong>SaaS Demonstration Role Switcher:</strong>
+        </div>
+        <div class="role-pills">
+          <span class="role-pill" data-role-switch="patient"><i class="fa-solid fa-user"></i> Patient View</span>
+          <span class="role-pill" data-role-switch="doctor"><i class="fa-solid fa-user-md"></i> Doctor / Staff View</span>
+          <span class="role-pill active" data-role-switch="admin"><i class="fa-solid fa-user-shield"></i> Admin View</span>
+        </div>
+      </div>
+
+      <div class="saas-container">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="saas-sidebar">
+          <div class="sidebar-header">
+            <div class="brand-logo" style="font-size: 1.1rem;">
+              <div class="brand-icon" style="width:32px; height:32px; font-size:1rem;"><i class="fa-solid fa-hospital-user"></i></div>
+              <span>ClinicPharm</span>
+            </div>
+          </div>
+          <ul class="sidebar-menu" id="sidebar-menu-list">
+            <!-- Rendered by navigation.js -->
+          </ul>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="saas-main">
+          <!-- Topbar -->
+          <header class="saas-topbar">
+            <div style="font-size: 0.9rem; color: var(--text-secondary); font-weight: 600;">
+              Branch: <span style="color:var(--emerald);">Main Central Clinic & Chemist</span>
+            </div>
+
+            <div class="topbar-actions">
+              <div class="user-profile-badge">
+                <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=200" alt="Avatar" class="user-avatar">
+                <div>
+                  <div style="font-weight: 700; font-size: 0.875rem;" id="topbar-user-name">Dr. Sarah Jenkins</div>
+                  <div style="font-size: 0.75rem; color: var(--text-muted);" id="topbar-user-role">Administrator</div>
+                </div>
+              </div>
+              <button class="btn btn-sm btn-secondary" id="btn-logout"><i class="fa-solid fa-right-from-bracket"></i> Exit SaaS</button>
+            </div>
+          </header>
+
+          <!-- SPA Dynamic Tab Content -->
+          <div class="saas-content" id="saas-tab-content">
+            <!-- Rendered dynamically by navigation.js -->
+          </div>
+        </main>
+
+      </div>
+    </div>
+
+    <!-- ==========================================================================
+         3. MODALS LAYER
+         ========================================================================== -->
+
+    <!-- Login Modal -->
+    <div class="modal-overlay" id="login-modal">
+      <div class="modal-container" style="max-width: 440px;">
+        <div class="modal-header">
+          <h3 class="modal-title"><i class="fa-solid fa-right-to-bracket" style="color:var(--emerald);"></i> SaaS Portal Login</h3>
+          <button style="background:none; border:none; color:var(--text-muted); font-size:1.2rem; cursor:pointer;" data-action="close-modal">&times;</button>
+        </div>
+        <form id="login-form">
+          <div class="modal-body">
+            <div class="form-group">
+              <label>Select Login Role</label>
+              <select id="login-role-select">
+                <option value="admin">Administrator / Manager</option>
+                <option value="doctor">Doctor / Clinical Staff</option>
+                <option value="patient">Patient Portal</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Email Address</label>
+              <input type="email" value="admin@clinicpharm.com" required>
+            </div>
+            <div class="form-group">
+              <label>Password</label>
+              <input type="password" value="••••••••••••" required>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-action="close-modal">Cancel</button>
+            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-right-to-bracket"></i> Sign In to Dashboard</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal-overlay" id="register-modal">
+      <div class="modal-container" style="max-width: 480px;">
+        <div class="modal-header">
+          <h3 class="modal-title"><i class="fa-solid fa-user-plus" style="color:var(--emerald);"></i> Register Business Account</h3>
+          <button style="background:none; border:none; color:var(--text-muted); font-size:1.2rem; cursor:pointer;" data-action="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Clinic or Chemist Name</label>
+            <input type="text" placeholder="e.g. HealthFirst Clinic & Pharmacy">
+          </div>
+          <div class="form-group">
+            <label>Work Email</label>
+            <input type="email" placeholder="contact@healthfirst.com">
+          </div>
+          <div class="form-group">
+            <label>Account Password</label>
+            <input type="password" placeholder="••••••••••••">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-action="close-modal">Cancel</button>
+          <button type="button" class="btn btn-primary" data-action="open-login">Create Account & Login</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Medical Record Modal -->
+    <div class="modal-overlay" id="medical-record-modal">
+      <div class="modal-container">
+        <div class="modal-header">
+          <h3 class="modal-title"><i class="fa-solid fa-notes-medical" style="color:var(--cyan);"></i> Detailed Medical Record</h3>
+          <button style="background:none; border:none; color:var(--text-muted); font-size:1.2rem; cursor:pointer;" data-action="close-modal">&times;</button>
+        </div>
+        <div class="modal-body" id="medical-record-modal-body">
+          <!-- Rendered by patients.js -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-action="close-modal">Close Record</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add Patient Modal -->
+    <div class="modal-overlay" id="add-patient-modal">
+      <div class="modal-container">
+        <div class="modal-header">
+          <h3 class="modal-title"><i class="fa-solid fa-user-plus" style="color:var(--emerald);"></i> Register New Patient</h3>
+          <button style="background:none; border:none; color:var(--text-muted); font-size:1.2rem; cursor:pointer;" data-action="close-modal">&times;</button>
+        </div>
+        <form id="form-add-patient">
+          <div class="modal-body">
+            <div class="form-group">
+              <label>Full Name</label>
+              <input type="text" id="pat-name" placeholder="Full Name" required>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Age</label>
+                <input type="number" id="pat-age" value="35" required>
+              </div>
+              <div class="form-group">
+                <label>Gender</label>
+                <select id="pat-gender">
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Phone Number</label>
+                <input type="text" id="pat-phone" placeholder="+1 (555) 000-0000" required>
+              </div>
+              <div class="form-group">
+                <label>Blood Group</label>
+                <select id="pat-blood">
+                  <option value="O+">O+</option>
+                  <option value="A+">A+</option>
+                  <option value="B+">B+</option>
+                  <option value="AB+">AB+</option>
+                  <option value="O-">O-</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Email Address</label>
+              <input type="email" id="pat-email" placeholder="patient@example.com">
+            </div>
+            <div class="form-group">
+              <label>Known Allergies (comma separated)</label>
+              <input type="text" id="pat-allergies" placeholder="Penicillin, Peanuts...">
+            </div>
+            <div class="form-group">
+              <label>Medical History</label>
+              <textarea id="pat-history" rows="2" placeholder="Existing conditions or past surgeries..."></textarea>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Vitals - Blood Pressure</label>
+                <input type="text" id="pat-bp" value="120/80">
+              </div>
+              <div class="form-group">
+                <label>Vitals - Pulse (bpm)</label>
+                <input type="number" id="pat-pulse" value="72">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Vitals - Temperature (°C)</label>
+                <input type="text" id="pat-temp" value="36.6°C">
+              </div>
+              <div class="form-group">
+                <label>Vitals - Weight (kg)</label>
+                <input type="text" id="pat-weight" value="70 kg">
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-action="close-modal">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save Patient Record</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Book Appointment Modal -->
+    <div class="modal-overlay" id="book-appointment-modal">
+      <div class="modal-container">
+        <div class="modal-header">
+          <h3 class="modal-title"><i class="fa-solid fa-calendar-plus" style="color:var(--cyan);"></i> Schedule Patient Appointment</h3>
+          <button style="background:none; border:none; color:var(--text-muted); font-size:1.2rem; cursor:pointer;" data-action="close-modal">&times;</button>
+        </div>
+        <form id="form-book-appointment">
+          <div class="modal-body">
+            <div class="form-group">
+              <label>Select Patient</label>
+              <select id="apt-patient-select" required></select>
+            </div>
+            <div class="form-group">
+              <label>Assign Doctor</label>
+              <select id="apt-doctor-select" required></select>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Date</label>
+                <input type="date" id="apt-date" value="2026-09-15" required>
+              </div>
+              <div class="form-group">
+                <label>Time Slot</label>
+                <input type="text" id="apt-time" value="10:30 AM" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Appointment Type</label>
+              <select id="apt-type">
+                <option value="Consultation">Clinical Consultation</option>
+                <option value="Routine Checkup">Routine Checkup</option>
+                <option value="Follow-up">Follow-up Visit</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Notes / Reason for Visit</label>
+              <textarea id="apt-notes" rows="2" placeholder="Symptoms or reason..."></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-action="close-modal">Cancel</button>
+            <button type="submit" class="btn btn-cyan">Confirm Appointment</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Consultation Modal -->
+    <div class="modal-overlay" id="consultation-modal">
+      <div class="modal-container">
+        <div class="modal-header">
+          <h3 class="modal-title"><i class="fa-solid fa-stethoscope" style="color:var(--emerald);"></i> Doctor Consultation Form</h3>
+          <button style="background:none; border:none; color:var(--text-muted); font-size:1.2rem; cursor:pointer;" data-action="close-modal">&times;</button>
+        </div>
+        <div class="modal-body" id="consultation-modal-body">
+          <!-- Rendered by appointments.js -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-action="close-modal">Cancel</button>
+          <button type="submit" form="consultation-record-form" class="btn btn-primary">Save & Go to Prescription</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Create Prescription Modal -->
+    <div class="modal-overlay" id="create-rx-modal">
+      <div class="modal-container">
+        <div class="modal-header">
+          <h3 class="modal-title"><i class="fa-solid fa-file-prescription" style="color:var(--emerald);"></i> Issue New Prescription</h3>
+          <button style="background:none; border:none; color:var(--text-muted); font-size:1.2rem; cursor:pointer;" data-action="close-modal">&times;</button>
+        </div>
+        <form id="form-create-rx">
+          <div class="modal-body">
+            <div class="form-group">
+              <label>Select Patient</label>
+              <select id="rx-patient-select" required></select>
+            </div>
+            <div class="form-group">
+              <label>Select Prescribed Medicine (from Chemist Inventory)</label>
+              <select id="rx-medicine-select" required></select>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Dosage</label>
+                <input type="text" id="rx-dosage" value="1 tablet" required>
+              </div>
+              <div class="form-group">
+                <label>Frequency</label>
+                <input type="text" id="rx-frequency" value="Twice daily (BID)" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Duration</label>
+                <input type="text" id="rx-duration" value="7 days" required>
+              </div>
+              <div class="form-group">
+                <label>Quantity to Dispense</label>
+                <input type="number" id="rx-qty" value="14" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Instructions to Pharmacist & Patient</label>
+              <textarea id="rx-instructions" rows="2" placeholder="Take after meals..."></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-action="close-modal">Cancel</button>
+            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> Send to Chemist Queue</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Add Medicine Modal -->
+    <div class="modal-overlay" id="add-medicine-modal">
+      <div class="modal-container">
+        <div class="modal-header">
+          <h3 class="modal-title"><i class="fa-solid fa-pills" style="color:var(--emerald);"></i> Add Medicine to Inventory</h3>
+          <button style="background:none; border:none; color:var(--text-muted); font-size:1.2rem; cursor:pointer;" data-action="close-modal">&times;</button>
+        </div>
+        <form id="form-add-medicine">
+          <div class="modal-body">
+            <div class="form-group">
+              <label>Medicine Name</label>
+              <input type="text" id="med-name" placeholder="e.g. Paracetamol 500mg" required>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Category</label>
+                <select id="med-category">
+                  <option value="Analgesics & NSAIDs">Analgesics & NSAIDs</option>
+                  <option value="Antibiotics">Antibiotics</option>
+                  <option value="Antidiabetic">Antidiabetic</option>
+                  <option value="Cardiovascular">Cardiovascular</option>
+                  <option value="Respiratory">Respiratory</option>
+                  <option value="Vitamins & Supplements">Vitamins & Supplements</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>SKU Code</label>
+                <input type="text" id="med-sku" placeholder="e.g. MED-PRC-500">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Initial Stock Count</label>
+                <input type="number" id="med-stock" value="100" required>
+              </div>
+              <div class="form-group">
+                <label>Min Re-order Level</label>
+                <input type="number" id="med-reorder" value="30" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Retail Selling Price ($)</label>
+                <input type="number" step="0.01" id="med-price" value="1.50" required>
+              </div>
+              <div class="form-group">
+                <label>Cost Price ($)</label>
+                <input type="number" step="0.01" id="med-cost" value="0.75" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Supplier</label>
+              <select id="med-supplier">
+                <option value="GlobalPharma Distributors">GlobalPharma Distributors</option>
+                <option value="MediCare Supply Co.">MediCare Supply Co.</option>
+                <option value="Apex BioLabs">Apex BioLabs</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Description / Usage</label>
+              <textarea id="med-description" rows="2" placeholder="Brief clinical description..."></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-action="close-modal">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save to Inventory</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Printable Receipt Modal -->
+    <div class="modal-overlay" id="receipt-modal">
+      <div class="modal-container" style="max-width: 480px;">
+        <div class="modal-header">
+          <h3 class="modal-title"><i class="fa-solid fa-receipt" style="color:var(--emerald);"></i> Customer Receipt</h3>
+          <button style="background:none; border:none; color:var(--text-muted); font-size:1.2rem; cursor:pointer;" data-action="close-modal">&times;</button>
+        </div>
+        <div class="modal-body" id="printable-receipt-area">
+          <!-- Rendered by pos.js -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-action="close-modal">Close</button>
+          <button type="button" class="btn btn-primary" onclick="window.print()"><i class="fa-solid fa-print"></i> Print Receipt</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Entry Script Module -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
