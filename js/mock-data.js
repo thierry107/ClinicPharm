@@ -7,8 +7,8 @@ export const INITIAL_DATA = {
   // Current active user & session simulation
   currentUser: {
     id: "usr-001",
-    name: "Dr. Sarah Jenkins",
-    email: "s.jenkins@curishealth.co.ke",
+    name: "Dr. Dominic Szoboszlai",
+    email: "dominicszobo@curishealth.co.ke",
     role: "admin", // 'patient', 'doctor', 'admin'
     avatar: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=200",
     title: "Chief Medical Officer & Administrator"
@@ -82,11 +82,11 @@ export const INITIAL_DATA = {
   staff: [
     {
       id: "doc-01",
-      name: "Dr. Sarah Jenkins",
+      name: "Dr. Dominic Szoboszlai",
       role: "doctor",
       specialty: "General Medicine / Internal Practitioner",
       phone: "+254 720 111 222",
-      email: "s.jenkins@curishealth.co.ke",
+      email: "dominicszobo@curishealth.co.ke",
       status: "On Duty"
     },
     {
@@ -95,7 +95,7 @@ export const INITIAL_DATA = {
       role: "doctor",
       specialty: "Pediatrics & Family Health",
       phone: "+254 721 333 444",
-      email: "r.vance@curishealth.co.ke",
+      email: "robertvance@curishealth.co.ke",
       status: "On Duty"
     },
     {
