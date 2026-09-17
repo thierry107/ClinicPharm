@@ -1,87 +1,67 @@
 /**
  * Curis Health - Supabase Client Singleton
  *
- * This module initializes a single, reusable Supabase client instance for the
- * entire application. All future Supabase interactions (auth, database queries,
- * real-time subscriptions) should import this client.
+ * Uses direct ESM import from jsDelivr CDN — no <script> tag or window.supabase needed.
+ * This is the single source of truth for the Supabase connection across the entire app.
  *
- * CURRENT STATUS: SDK initialized and connected. Demo mode is still active.
- * Auth, RLS, and store.js migration to Supabase come in a later phase.
+ * CURRENT STATUS: SDK initialized. Demo/mock mode remains active.
+ * Auth and store.js migration come in later phases.
  *
- * HOW TO USE:
+ * HOW TO USE IN OTHER MODULES:
  *   import { supabase, isSupabaseReady } from './supabase-client.js';
  *   if (isSupabaseReady()) {
  *     const { data, error } = await supabase.from('patients').select('*');
  *   }
  */
 
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 import { SUPABASE_CONFIG } from './config.js';
-
-// Detect if Supabase CDN library has been loaded
-const supabaseLib = window.supabase;
 
 let _client = null;
 let _ready = false;
 
 function initSupabaseClient() {
-  if (!supabaseLib || typeof supabaseLib.createClient !== 'function') {
-    console.warn(
-      '[Curis Health] Supabase CDN library not detected. ' +
-      'Ensure the Supabase CDN <script> tag is in index.html before app.js.'
-    );
-    return null;
-  }
-
   const { url, anonKey } = SUPABASE_CONFIG;
 
   // Guard against un-configured placeholder credentials
-  if (url.includes('YOUR_PROJECT_ID') || anonKey.includes('YOUR_ANON_PUBLIC_KEY')) {
+  if (!url || url.includes('YOUR_PROJECT_ID') || !anonKey || anonKey.includes('YOUR_ANON_PUBLIC_KEY')) {
     console.warn(
-      '[Curis Health] Supabase credentials not configured yet. ' +
-      'Open js/config.js and replace the placeholder URL and anonKey with your project credentials. ' +
-      'The app will continue running in Demo/Mock mode until configured.'
+      '[Curis Health] Supabase credentials not configured. ' +
+      'Open js/config.js and set your project URL and anon key. ' +
+      'App continues in Demo/Mock mode.'
     );
     return null;
   }
 
   try {
-    const client = supabaseLib.createClient(url, anonKey, {
+    const client = createClient(url, anonKey, {
       auth: {
-        // Persist session in localStorage between page refreshes
-        persistSession: true,
-        // Automatically refresh the JWT token before it expires
-        autoRefreshToken: true,
-        // Do NOT auto-detect session from URL (we will handle auth explicitly later)
-        detectSessionInUrl: false
-      },
-      realtime: {
-        // Disable realtime globally until explicitly enabled per feature
-        enabled: false
+        persistSession: true,       // Keep session alive across page refreshes
+        autoRefreshToken: true,     // Automatically renew JWT before expiry
+        detectSessionInUrl: false   // We will handle auth redirects explicitly later
       }
     });
 
-    console.info('[Curis Health] ✅ Supabase client initialized successfully.');
+    console.info('[Curis Health] ✅ Supabase client initialized. Project:', url);
     return client;
   } catch (err) {
-    console.error('[Curis Health] ❌ Failed to initialize Supabase client:', err);
+    console.error('[Curis Health] ❌ Supabase client failed to initialize:', err.message);
     return null;
   }
 }
 
-// Initialize once on module load
 _client = initSupabaseClient();
 _ready = _client !== null;
 
 /**
- * The initialized Supabase client instance.
- * Will be null if credentials are not configured or CDN failed to load.
+ * The initialized Supabase client. Null if not configured or init failed.
  * @type {import('@supabase/supabase-js').SupabaseClient | null}
  */
 export const supabase = _client;
 
 /**
- * Returns true if the Supabase client was successfully initialized.
- * Use this guard before making any Supabase calls.
+ * Returns true if Supabase is connected and ready to use.
+ * Always check this before making any Supabase API calls.
  * @returns {boolean}
  */
 export function isSupabaseReady() {
@@ -89,25 +69,26 @@ export function isSupabaseReady() {
 }
 
 /**
- * Performs a lightweight connectivity test against the Supabase instance.
- * Logs the result to the console. Does not affect app state.
- * Call this once during app initialization to confirm the connection.
+ * Lightweight connectivity test — pings the Supabase project.
+ * Logs result to console only. Does NOT affect app state or demo mode.
  */
 export async function testSupabaseConnection() {
   if (!isSupabaseReady()) {
-    console.info('[Curis Health] Supabase connection test skipped — client not ready (Demo Mode active).');
+    console.info('[Curis Health] Connection test skipped — Supabase not configured (Demo Mode).');
     return;
   }
 
   try {
-    // Minimal query: select nothing from a public table to verify connectivity
+    // Minimal round-trip: select nothing, just confirm the project responds
     const { error } = await supabase.from('patients').select('id').limit(1);
-    if (error) {
-      console.warn('[Curis Health] Supabase connectivity test failed:', error.message);
+
+    if (error && error.code !== 'PGRST116') {
+      // PGRST116 = "no rows found" — that's fine, it means the table exists
+      console.warn('[Curis Health] Supabase connectivity issue:', error.message);
     } else {
-      console.info('[Curis Health] ✅ Supabase connectivity test passed. Database is reachable.');
+      console.info('[Curis Health] ✅ Supabase connectivity confirmed. Database is reachable.');
     }
   } catch (err) {
-    console.warn('[Curis Health] Supabase connectivity test threw an exception:', err);
+    console.warn('[Curis Health] Supabase connectivity test failed:', err.message);
   }
 }
