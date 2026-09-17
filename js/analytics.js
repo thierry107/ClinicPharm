@@ -13,7 +13,7 @@ export function renderAnalyticsView(container, role) {
   const totalRevenue = sales.reduce((sum, s) => sum + s.totalAmount, 0);
 
   container.innerHTML = `
-    <div style="margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
+    <div class="view-header-bar">
       <div>
         <h2 style="font-size: 1.75rem; font-weight: 800;">Operational Analytics & Financial Ledger</h2>
         <p style="color: var(--text-secondary); font-size: 0.9rem;">Overview of clinic patient metrics, chemist sales, and inventory performance in Kenyan Shillings (KSh).</p>

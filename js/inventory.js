@@ -11,7 +11,7 @@ export function renderInventoryView(container, role) {
   const lowStockCount = medicines.filter(m => m.stock <= m.minReorderLevel).length;
 
   container.innerHTML = `
-    <div style="margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
+    <div class="view-header-bar">
       <div>
         <h2 style="font-size: 1.75rem; font-weight: 800;">Chemist Inventory & Stock Catalog</h2>
         <p style="color: var(--text-secondary); font-size: 0.9rem;">Track drug stock levels, batch numbers, expiry dates, and supplier re-orders.</p>

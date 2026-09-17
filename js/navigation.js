@@ -9,6 +9,7 @@ import { renderPrescriptionsView } from './prescriptions.js';
 import { renderInventoryView } from './inventory.js';
 import { renderPosView } from './pos.js';
 import { renderAnalyticsView } from './analytics.js';
+import { getAvatarUrl } from './avatar.js';
 
 let activeTab = 'dashboard';
 
@@ -77,8 +78,14 @@ export function updateRoleUI() {
   // Update topbar user details
   const nameEl = document.getElementById('topbar-user-name');
   const roleEl = document.getElementById('topbar-user-role');
+  const avatarEl = document.getElementById('topbar-user-avatar');
+
   if (nameEl) nameEl.textContent = user.name;
   if (roleEl) roleEl.textContent = user.title || role.toUpperCase();
+  if (avatarEl) {
+    avatarEl.src = getAvatarUrl(user);
+    avatarEl.alt = `${user.name || 'User'} Profile Photo`;
+  }
 
   // Update Role Pills
   document.querySelectorAll('[data-role-switch]').forEach(pill => {
@@ -276,7 +283,7 @@ function renderDashboardView(container, role) {
   }
 
   container.innerHTML = `
-    <div style="margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
+    <div class="dashboard-header-bar">
       <div>
         <h2 style="font-size: 1.75rem; font-weight: 800;">Welcome back, ${store.getCurrentUser().name}</h2>
         <p style="color: var(--text-secondary); font-size: 0.9rem;">Live Clinic & Chemist operational summary.</p>
@@ -299,7 +306,7 @@ function renderDashboardView(container, role) {
       <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; color: var(--emerald);">
         <i class="fa-solid fa-diagram-project"></i> Connected Clinic-to-Chemist Live Workflow Status
       </h3>
-      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;">
+      <div class="workflow-steps-grid">
         <div class="preview-workflow-step">
           <div class="workflow-step-num">1</div>
           <div>
@@ -332,7 +339,7 @@ function renderDashboardView(container, role) {
     </div>
 
     <!-- Recent Prescriptions & Patients Tables -->
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+    <div class="dashboard-tables-grid">
       <div class="table-card">
         <div class="table-header">
           <h3 style="font-size: 1rem; font-weight: 700;">Prescription Dispensing Queue</h3>

@@ -10,7 +10,8 @@ export const INITIAL_DATA = {
     name: "Dr. Dominic Szoboszlai",
     email: "dominicszobo@curishealth.co.ke",
     role: "admin", // 'patient', 'doctor', 'admin'
-    avatar: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=200",
+    avatar: null,
+    avatar_url: null,
     title: "Chief Medical Officer & Administrator"
   },
 

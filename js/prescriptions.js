@@ -8,7 +8,7 @@ export function renderPrescriptionsView(container, role) {
   const prescriptions = store.getPrescriptions();
 
   container.innerHTML = `
-    <div style="margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
+    <div class="view-header-bar">
       <div>
         <h2 style="font-size: 1.75rem; font-weight: 800;">Prescription Dispensing & Clinic Bridge</h2>
         <p style="color: var(--text-secondary); font-size: 0.9rem;">Connected workflow connecting doctor prescriptions to chemist stock dispensing.</p>

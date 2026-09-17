@@ -18,7 +18,13 @@ class DataStore {
     try {
       const saved = localStorage.getItem(this.STORAGE_KEY);
       if (saved) {
-        return JSON.parse(saved);
+        const parsed = JSON.parse(saved);
+        // Purge legacy photographic avatar if previously cached in localStorage
+        if (parsed.currentUser && parsed.currentUser.avatar && parsed.currentUser.avatar.includes('unsplash.com')) {
+          parsed.currentUser.avatar = null;
+          parsed.currentUser.avatar_url = null;
+        }
+        return parsed;
       }
     } catch (e) {
       console.warn('Could not read localStorage state, using initial seed data.', e);
@@ -75,6 +81,8 @@ class DataStore {
         this.state.currentUser.name = 'Admin (Dr. Dominic Szoboszlai)';
         this.state.currentUser.title = 'Chief Medical Officer & Administrator';
       }
+      this.state.currentUser.avatar = null;
+      this.state.currentUser.avatar_url = null;
       this.saveState();
     }
   }

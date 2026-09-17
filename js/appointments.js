@@ -10,7 +10,7 @@ export function renderAppointmentsView(container, role) {
   const patients = store.getPatients();
 
   container.innerHTML = `
-    <div style="margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
+    <div class="view-header-bar">
       <div>
         <h2 style="font-size: 1.75rem; font-weight: 800;">Appointments & Doctor Consultations</h2>
         <p style="color: var(--text-secondary); font-size: 0.9rem;">Schedule visits, manage clinical queues, and conduct consultations.</p>

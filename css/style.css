@@ -571,6 +571,9 @@ input:focus, select:focus, textarea:focus {
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid var(--emerald);
+  background: var(--bg-card);
+  display: inline-block;
+  vertical-align: middle;
 }
 
 /* SaaS Main Workspace */
@@ -632,7 +635,8 @@ input:focus, select:focus, textarea:focus {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
-  overflow: hidden;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   margin-bottom: 2rem;
 }
 
@@ -746,6 +750,41 @@ input:focus, select:focus, textarea:focus {
 .form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+/* Responsive Layout Components */
+.view-header-bar,
+.dashboard-header-bar {
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.workflow-steps-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.dashboard-tables-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.pos-layout-grid {
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 1.5rem;
+}
+
+.pos-medicine-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
 }
 

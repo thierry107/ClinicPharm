@@ -12,7 +12,7 @@ export function renderPosView(container, role) {
   const patients = store.getPatients();
 
   container.innerHTML = `
-    <div style="margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
+    <div class="pos-header-bar view-header-bar">
       <div>
         <h2 style="font-size: 1.75rem; font-weight: 800;">Chemist Point of Sale (POS) & Billing</h2>
         <p style="color: var(--text-secondary); font-size: 0.9rem;">Fast dispensing checkout, prescription auto-fill, and printable receipts in KSh.</p>
@@ -20,7 +20,7 @@ export function renderPosView(container, role) {
       <button class="btn btn-secondary" id="btn-clear-cart"><i class="fa-solid fa-rotate-left"></i> Reset Cart</button>
     </div>
 
-    <div style="display: grid; grid-template-columns: 1fr 420px; gap: 1.5rem;">
+    <div class="pos-layout-grid">
       
       <!-- Left Column: Medicine Catalog Selection -->
       <div>
@@ -31,7 +31,7 @@ export function renderPosView(container, role) {
           </div>
         </div>
 
-        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;" id="pos-medicine-grid">
+        <div class="pos-medicine-grid" id="pos-medicine-grid">
           ${renderPosMedCards(medicines)}
         </div>
       </div>
