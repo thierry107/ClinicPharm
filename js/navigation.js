@@ -28,6 +28,13 @@ const ROLE_MENUS = {
     { id: 'prescriptions', label: 'Issue Prescriptions', icon: 'fa-file-prescription' },
     { id: 'inventory', label: 'Medicine Information', icon: 'fa-pills' }
   ],
+  chemist: [
+    { id: 'dashboard', label: 'Chemist Dashboard', icon: 'fa-chart-pie' },
+    { id: 'prescriptions', label: 'Prescription Queue', icon: 'fa-file-prescription' },
+    { id: 'inventory', label: 'Chemist Inventory', icon: 'fa-boxes-stacked' },
+    { id: 'pos', label: 'POS & Dispensing', icon: 'fa-cash-register' },
+    { id: 'analytics', label: 'Sales Reports', icon: 'fa-chart-line' }
+  ],
   admin: [
     { id: 'dashboard', label: 'Executive Dashboard', icon: 'fa-chart-pie' },
     { id: 'patients', label: 'Patient Directory', icon: 'fa-users-medical' },
@@ -201,6 +208,37 @@ function renderDashboardView(container, role) {
           <div class="kpi-value">${prescriptions.length}</div>
         </div>
         <div class="kpi-icon" style="background:var(--emerald-glow); color:var(--emerald);"><i class="fa-solid fa-prescription-bottle-medical"></i></div>
+      </div>
+    `;
+  } else if (role === 'chemist') {
+    kpiCardsHTML = `
+      <div class="kpi-card">
+        <div>
+          <div class="kpi-title">Pending Dispense</div>
+          <div class="kpi-value">${prescriptions.filter(p => p.status === 'Pending Dispense').length}</div>
+        </div>
+        <div class="kpi-icon" style="background:var(--amber-glow); color:var(--amber);"><i class="fa-solid fa-clock"></i></div>
+      </div>
+      <div class="kpi-card">
+        <div>
+          <div class="kpi-title">Chemist Daily Sales</div>
+          <div class="kpi-value" style="color:var(--emerald);">KSh ${todayRevenue.toFixed(2)}</div>
+        </div>
+        <div class="kpi-icon" style="background:var(--emerald-glow); color:var(--emerald);"><i class="fa-solid fa-coins"></i></div>
+      </div>
+      <div class="kpi-card">
+        <div>
+          <div class="kpi-title">Low Stock Alerts</div>
+          <div class="kpi-value" style="color:var(--rose);">${lowStockCount}</div>
+        </div>
+        <div class="kpi-icon" style="background:var(--rose-glow); color:var(--rose);"><i class="fa-solid fa-triangle-exclamation"></i></div>
+      </div>
+      <div class="kpi-card">
+        <div>
+          <div class="kpi-title">Active Medicines</div>
+          <div class="kpi-value">${medicines.length}</div>
+        </div>
+        <div class="kpi-icon" style="background:var(--cyan-glow); color:var(--cyan);"><i class="fa-solid fa-pills"></i></div>
       </div>
     `;
   } else {
