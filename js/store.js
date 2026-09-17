@@ -11,6 +11,8 @@ class DataStore {
     this.STORAGE_KEY = 'clinicpharm_state_v1';
     this.listeners = [];
     this.state = this.loadState();
+    this.authenticatedUser = null;
+    this.authMode = 'demo'; // 'demo' | 'real'
   }
 
   // Load from localStorage or fallback to initial mock seed
@@ -62,10 +64,57 @@ class DataStore {
 
   // --- USER & ROLE SERVICES ---
   getCurrentUser() {
+    if (this.isRealAuth()) {
+      return this.authenticatedUser;
+    }
     return this.state.currentUser;
   }
 
+  isRealAuth() {
+    return this.authMode === 'real' && this.authenticatedUser !== null;
+  }
+
+  getAuthMode() {
+    return this.authMode;
+  }
+
+  setAuthenticatedUser(userData) {
+    if (!userData) return;
+    const role = (userData.role || 'patient').toLowerCase();
+
+    // Contextual title based on verified database role
+    let defaultTitle = 'Patient Portal User';
+    if (role === 'doctor') defaultTitle = 'Medical Practitioner';
+    else if (role === 'chemist') defaultTitle = 'Licensed Chemist / Pharmacist';
+    else if (role === 'admin') defaultTitle = 'Chief Medical Officer & Administrator';
+
+    this.authenticatedUser = {
+      id: userData.id,
+      name: userData.full_name || userData.name || 'Curis User',
+      full_name: userData.full_name || userData.name || 'Curis User',
+      email: userData.email || '',
+      role: role,
+      avatar: userData.avatar || null,
+      avatar_url: userData.avatar_url || null,
+      title: userData.title || defaultTitle
+    };
+    this.authMode = 'real';
+    this.notify();
+  }
+
+  clearAuthenticatedUser() {
+    this.authenticatedUser = null;
+    this.authMode = 'demo';
+    this.notify();
+  }
+
   setCurrentRole(role) {
+    // If real user is authenticated, database role is authoritative — demo switcher cannot override
+    if (this.isRealAuth()) {
+      console.warn('[Curis Health] Cannot change role in authenticated session. Database role is authoritative.');
+      return;
+    }
+
     if (['patient', 'doctor', 'chemist', 'admin'].includes(role)) {
       this.state.currentUser.role = role;
       if (role === 'patient') {
