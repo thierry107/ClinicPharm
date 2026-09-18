@@ -7,11 +7,10 @@ export const INITIAL_DATA = {
   // Current active user & session simulation
   currentUser: {
     id: "usr-001",
-    name: "Dr. Dominic Szoboszlai",
-    email: "dominicszobo@curishealth.co.ke",
+    name: "Dr. Thiaw Henry",
+    email: "[EMAIL_ADDRESS]",
     role: "admin", // 'patient', 'doctor', 'admin'
-    avatar: null,
-    avatar_url: null,
+    avatar: "img/avatar.jpg",
     title: "Chief Medical Officer & Administrator"
   },
 
@@ -19,11 +18,11 @@ export const INITIAL_DATA = {
   patients: [
     {
       id: "pat-101",
-      name: "Arthur Pendelton",
+      name: "Marcus Vance",
       age: 45,
       gender: "Male",
       phone: "+254 722 123 456",
-      email: "arthur.p@example.com",
+      email: "[EMAIL_ADDRESS]",
       address: "Kilimani, Nairobi",
       bloodGroup: "O+",
       allergies: ["Penicillin", "Dust Mites"],
@@ -49,11 +48,11 @@ export const INITIAL_DATA = {
     },
     {
       id: "pat-103",
-      name: "Marcus Vance",
-      age: 58,
+      name: "Spectre Kariri",
+      age: 28,
       gender: "Male",
       phone: "+254 711 456 789",
-      email: "marcus.vance@example.com",
+      email: "[EMAIL_ADDRESS]",
       address: "Milimani, Nakuru",
       bloodGroup: "B+",
       allergies: ["None"],
@@ -83,11 +82,11 @@ export const INITIAL_DATA = {
   staff: [
     {
       id: "doc-01",
-      name: "Dr. Dominic Szoboszlai",
+      name: "Dr. Olivia Birgen",
       role: "doctor",
       specialty: "General Medicine / Internal Practitioner",
       phone: "+254 720 111 222",
-      email: "dominicszobo@curishealth.co.ke",
+      email: "olivia.birgen@curishealth.co.ke",
       status: "On Duty"
     },
     {
@@ -100,12 +99,21 @@ export const INITIAL_DATA = {
       status: "On Duty"
     },
     {
+      id: "doc-03",
+      name: "Dr. Thiaw Henry",
+      role: "doctor",
+      specialty: "Chief Medical Officer & Consultant",
+      phone: "+254 722 777 888",
+      email: "thiawhenry@curishealth.co.ke",
+      status: "On Duty"
+    },
+    {
       id: "pharm-01",
-      name: "Chemist David Kim",
+      name: "Chemist Damon Sims",
       role: "chemist",
       specialty: "Chief Chemist & Inventory Lead",
       phone: "+254 722 555 666",
-      email: "d.kim@curishealth.co.ke",
+      email: "d.sims@curishealth.co.ke",
       status: "On Duty"
     }
   ],
@@ -117,7 +125,7 @@ export const INITIAL_DATA = {
       patientId: "pat-101",
       patientName: "Arthur Pendelton",
       doctorId: "doc-01",
-      doctorName: "Dr. Sarah Jenkins",
+      doctorName: "Dr. Olivia Birgen",
       date: "2026-09-16",
       time: "09:30 AM",
       type: "Routine Checkup",
@@ -129,7 +137,7 @@ export const INITIAL_DATA = {
       patientId: "pat-102",
       patientName: "Elena Rostova",
       doctorId: "doc-01",
-      doctorName: "Dr. Sarah Jenkins",
+      doctorName: "Dr. Olivia Birgen",
       date: "2026-09-16",
       time: "11:00 AM",
       type: "Consultation",
@@ -152,8 +160,8 @@ export const INITIAL_DATA = {
       id: "apt-304",
       patientId: "pat-104",
       patientName: "Sophia Chen",
-      doctorId: "doc-01",
-      doctorName: "Dr. Sarah Jenkins",
+      doctorId: "doc-03",
+      doctorName: "Dr. Thiaw Henry",
       date: "2026-09-17",
       time: "10:00 AM",
       type: "General Checkup",
@@ -170,7 +178,7 @@ export const INITIAL_DATA = {
       patientId: "pat-101",
       patientName: "Arthur Pendelton",
       doctorId: "doc-01",
-      doctorName: "Dr. Sarah Jenkins",
+      doctorName: "Dr. Olivia Birgen",
       date: "2026-09-16",
       symptoms: "Mild headache, fatigue",
       diagnosis: "Essential Hypertension - Mild Spike",
@@ -187,7 +195,7 @@ export const INITIAL_DATA = {
       patientId: "pat-101",
       patientName: "Arthur Pendelton",
       doctorId: "doc-01",
-      doctorName: "Dr. Sarah Jenkins",
+      doctorName: "Dr. Olivia Birgen",
       date: "2026-09-16",
       status: "Pending Dispense", // 'Pending Dispense', 'Dispensed', 'Cancelled'
       items: [
@@ -219,7 +227,7 @@ export const INITIAL_DATA = {
       patientId: "pat-102",
       patientName: "Elena Rostova",
       doctorId: "doc-01",
-      doctorName: "Dr. Sarah Jenkins",
+      doctorName: "Dr. Olivia Birgen",
       date: "2026-09-15",
       status: "Dispensed",
       items: [
@@ -374,7 +382,7 @@ export const INITIAL_DATA = {
       totalAmount: 2916.00,
       paymentMethod: "Mobile Money (MPesa)",
       paymentStatus: "Paid",
-      processedBy: "Chemist David Kim"
+      processedBy: "Chemist Damon Sims"
     }
   ]
 };

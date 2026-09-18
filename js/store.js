@@ -121,13 +121,13 @@ class DataStore {
         this.state.currentUser.name = 'Arthur Pendelton (Patient)';
         this.state.currentUser.title = 'Patient Portal User';
       } else if (role === 'doctor') {
-        this.state.currentUser.name = 'Dr. Dominic Szoboszlai';
+        this.state.currentUser.name = 'Dr. Olivia Birgen';
         this.state.currentUser.title = 'General Practitioner';
       } else if (role === 'chemist') {
-        this.state.currentUser.name = 'Chemist David Kim';
+        this.state.currentUser.name = 'Chemist Damon Sims';
         this.state.currentUser.title = 'Chief Chemist & Inventory Lead';
       } else {
-        this.state.currentUser.name = 'Admin (Dr. Dominic Szoboszlai)';
+        this.state.currentUser.name = 'Admin (Dr. Thiaw Henry)';
         this.state.currentUser.title = 'Chief Medical Officer & Administrator';
       }
       this.state.currentUser.avatar = null;

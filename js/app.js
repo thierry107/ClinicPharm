@@ -78,7 +78,7 @@ function bindModalForms() {
         patientId: patSelect.value,
         patientName: patObj ? patObj.name : 'Unknown Patient',
         doctorId: docSelect.value,
-        doctorName: docObj ? docObj.name : 'Dr. Sarah Jenkins',
+        doctorName: docObj ? docObj.name : 'Dr. Olivia Birgen',
         date: document.getElementById('apt-date').value,
         time: document.getElementById('apt-time').value,
         type: document.getElementById('apt-type').value,
