@@ -25,7 +25,7 @@ const ROLE_MENUS = {
   doctor: [
     { id: 'dashboard', label: 'Doctor Dashboard', icon: 'fa-chart-pie' },
     { id: 'appointments', label: 'Appointments', icon: 'fa-calendar-days' },
-    { id: 'patients', label: 'Patient Directory', icon: 'fa-users-medical' },
+    { id: 'patients', label: 'Patient Directory', icon: 'fa-hospital-user' },
     { id: 'prescriptions', label: 'Issue Prescriptions', icon: 'fa-file-prescription' },
     { id: 'inventory', label: 'Medicine Information', icon: 'fa-pills' }
   ],
@@ -38,7 +38,7 @@ const ROLE_MENUS = {
   ],
   admin: [
     { id: 'dashboard', label: 'Executive Dashboard', icon: 'fa-chart-pie' },
-    { id: 'patients', label: 'Patient Directory', icon: 'fa-users-medical' },
+    { id: 'patients', label: 'Patient Directory', icon: 'fa-hospital-user' },
     { id: 'appointments', label: 'Appointments & Queue', icon: 'fa-calendar-days' },
     { id: 'prescriptions', label: 'Prescription Queue', icon: 'fa-file-prescription' },
     { id: 'inventory', label: 'Chemist Inventory', icon: 'fa-boxes-stacked' },
@@ -207,7 +207,7 @@ function renderDashboardView(container, role) {
           <div class="kpi-title">Total Patients</div>
           <div class="kpi-value">${patients.length}</div>
         </div>
-        <div class="kpi-icon" style="background:rgba(99,102,241,0.15); color:var(--indigo);"><i class="fa-solid fa-users-medical"></i></div>
+        <div class="kpi-icon" style="background:rgba(99,102,241,0.15); color:var(--indigo);"><i class="fa-solid fa-hospital-user"></i></div>
       </div>
       <div class="kpi-card">
         <div>
