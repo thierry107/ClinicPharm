@@ -1,14 +1,234 @@
 /**
- * ClinicPharm Enterprise SaaS - Authentication & Role Selector Module
+ * ClinicPharm Enterprise SaaS - Authentication Module
+ * Real Supabase Auth (signUp, signInWithPassword, signOut, profiles)
  */
 
 import { store } from './store.js';
 import { navigateToApp, navigateToPublic } from './navigation.js';
+import { supabase, isSupabaseReady } from './supabase-client.js';
 
+/**
+ * 1. REAL REGISTRATION
+ * Registers a new user with Supabase Auth.
+ * Default role is assigned server-side via the database trigger (handle_new_user -> patient).
+ * Passes full_name in user metadata for the trigger.
+ *
+ * @param {string} fullName
+ * @param {string} email
+ * @param {string} password
+ * @param {string} confirmPassword
+ * @returns {Promise<{success: boolean, user?: object, session?: object, error?: string}>}
+ */
+export async function registerUser(fullName, email, password, confirmPassword) {
+  const nameStr = (fullName || '').trim();
+  const emailStr = (email || '').trim();
+  const pwdStr = password || '';
+  const confirmPwdStr = confirmPassword || '';
+
+  // Input Validation
+  if (!nameStr) {
+    return { success: false, error: 'Full name is required.' };
+  }
+  if (!emailStr) {
+    return { success: false, error: 'Email address is required.' };
+  }
+  if (!pwdStr) {
+    return { success: false, error: 'Password is required.' };
+  }
+  if (pwdStr.length < 6) {
+    return { success: false, error: 'Password must be at least 6 characters long.' };
+  }
+  if (pwdStr !== confirmPwdStr) {
+    return { success: false, error: 'Passwords do not match.' };
+  }
+
+  if (!isSupabaseReady() || !supabase) {
+    return { success: false, error: 'Supabase authentication service is not available.' };
+  }
+
+  try {
+    const { data, error } = await supabase.auth.signUp({
+      email: emailStr,
+      password: pwdStr,
+      options: {
+        data: {
+          full_name: nameStr
+        }
+      }
+    });
+
+    if (error) {
+      return { success: false, error: error.message };
+    }
+
+    return {
+      success: true,
+      user: data.user,
+      session: data.session
+    };
+  } catch (err) {
+    console.error('[Auth] Registration error:', err);
+    return {
+      success: false,
+      error: err.message || 'An unexpected error occurred during registration.'
+    };
+  }
+}
+
+/**
+ * 2. REAL LOGIN
+ * Authenticates user credentials against Supabase Auth.
+ * Fetches authoritative database profile and updates app store.
+ * Does NOT fall back to demo mode or use demo role selection.
+ *
+ * @param {string} email
+ * @param {string} password
+ * @returns {Promise<{success: boolean, user?: object, profile?: object, session?: object, error?: string}>}
+ */
+export async function loginUser(email, password) {
+  const emailStr = (email || '').trim();
+  const pwdStr = password || '';
+
+  if (!emailStr) {
+    return { success: false, error: 'Email address is required.' };
+  }
+  if (!pwdStr) {
+    return { success: false, error: 'Password is required.' };
+  }
+
+  if (!isSupabaseReady() || !supabase) {
+    return { success: false, error: 'Supabase authentication service is not available.' };
+  }
+
+  try {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: emailStr,
+      password: pwdStr
+    });
+
+    if (error) {
+      return { success: false, error: error.message };
+    }
+
+    const user = data.user;
+    if (!user) {
+      return { success: false, error: 'No user returned from authentication server.' };
+    }
+
+    // Fetch authoritative user profile from database
+    let profile = await fetchUserProfile(user.id);
+    if (!profile) {
+      profile = {
+        id: user.id,
+        role: user.user_metadata?.role || 'patient',
+        full_name: user.user_metadata?.full_name || user.email || 'Curis User',
+        email: user.email
+      };
+    }
+
+    // Store in application state architecture
+    handleAuthenticatedUser(user, profile);
+
+    return {
+      success: true,
+      user,
+      profile,
+      session: data.session
+    };
+  } catch (err) {
+    console.error('[Auth] Login error:', err);
+    return {
+      success: false,
+      error: err.message || 'An unexpected authentication error occurred.'
+    };
+  }
+}
+
+/**
+ * 3. PROFILE FETCHING
+ * Queries public.profiles table for specified user ID.
+ * Selects only: id, role, full_name, email.
+ *
+ * @param {string} userId
+ * @returns {Promise<{id: string, role: string, full_name: string, email: string} | null>}
+ */
+export async function fetchUserProfile(userId) {
+  if (!userId) return null;
+  if (!isSupabaseReady() || !supabase) {
+    console.warn('[Auth] Cannot fetch profile: Supabase client is not ready.');
+    return null;
+  }
+
+  try {
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('id, role, full_name, email')
+      .eq('id', userId)
+      .maybeSingle();
+
+    if (error) {
+      console.error('[Auth] Error fetching profile for user', userId, ':', error.message);
+      return null;
+    }
+
+    return data;
+  } catch (err) {
+    console.error('[Auth] Unexpected error fetching user profile:', err);
+    return null;
+  }
+}
+
+/**
+ * 4. REAL LOGOUT
+ * Signs out of Supabase Auth and resets application store state.
+ */
+export async function logoutUser() {
+  try {
+    if (isSupabaseReady() && supabase) {
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        console.warn('[Auth] Supabase signOut warning:', error.message);
+      }
+    }
+  } catch (err) {
+    console.error('[Auth] Unexpected error during logout:', err);
+  } finally {
+    store.clearAuthenticatedUser();
+    navigateToPublic();
+  }
+}
+
+/**
+ * 5. AUTHENTICATED USER HANDLING
+ * Takes Supabase user + database profile and persists in existing Store architecture.
+ *
+ * @param {object} user - Supabase Auth User
+ * @param {object} [profile] - DB Profile from public.profiles
+ */
+export function handleAuthenticatedUser(user, profile) {
+  if (!user) return;
+
+  const role = (profile?.role || user.user_metadata?.role || 'patient').toLowerCase();
+  const fullName = profile?.full_name || user.user_metadata?.full_name || user.email || 'Curis User';
+  const email = profile?.email || user.email || '';
+
+  const userData = {
+    id: user.id,
+    name: fullName,
+    full_name: fullName,
+    email: email,
+    role: role,
+    avatar: profile?.avatar_url || user.user_metadata?.avatar_url || null,
+    avatar_url: profile?.avatar_url || user.user_metadata?.avatar_url || null
+  };
+
+  store.setAuthenticatedUser(userData);
+}
+
+/**
+ * Initialize Modal & Auth Triggers
+ */
 export function initAuth() {
-  const loginModal = document.getElementById('login-modal');
-  const registerModal = document.getElementById('register-modal');
-
   // Trigger buttons
   document.querySelectorAll('[data-action="open-login"]').forEach(btn => {
     btn.addEventListener('click', (e) => {
@@ -30,23 +250,29 @@ export function initAuth() {
     });
   });
 
-  // Login Form Submission
+  // Login Form Submission Handler (Demo / Fallback Mode)
   const loginForm = document.getElementById('login-form');
   if (loginForm) {
     loginForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      const role = document.getElementById('login-role-select').value;
-      store.setCurrentRole(role);
+      // If real auth is active, do not allow demo switcher to override
+      if (store.isRealAuth()) return;
+      const roleSelect = document.getElementById('login-role-select');
+      if (roleSelect) {
+        const role = roleSelect.value;
+        store.setCurrentRole(role);
+      }
       closeAllModals();
       navigateToApp();
     });
   }
 
-  // Logout Button
+  // Logout Button Handler
   const logoutBtn = document.getElementById('btn-logout');
   if (logoutBtn) {
-    logoutBtn.addEventListener('click', () => {
-      navigateToPublic();
+    logoutBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      logoutUser();
     });
   }
 }
@@ -61,3 +287,4 @@ export function openModal(modalId) {
 export function closeAllModals() {
   document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'));
 }
+
