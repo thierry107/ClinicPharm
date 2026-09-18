@@ -909,3 +909,39 @@ input:focus, select:focus, textarea:focus {
   border: 1px solid rgba(99, 102, 241, 0.4);
 }
 
+/* Modal Auth Mode Switcher Tabs */
+.auth-tabs {
+  display: flex;
+  background: rgba(15, 23, 42, 0.6);
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 0.5rem;
+}
+
+.auth-tab {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: var(--transition);
+}
+
+.auth-tab:hover {
+  color: var(--text-primary);
+}
+
+.auth-tab.active {
+  color: var(--emerald);
+  border-bottom-color: var(--emerald);
+  background: rgba(16, 185, 129, 0.05);
+}
+
+

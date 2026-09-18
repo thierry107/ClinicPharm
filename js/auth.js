@@ -226,13 +226,14 @@ export function handleAuthenticatedUser(user, profile) {
 }
 
 /**
- * Initialize Modal & Auth Triggers
+ * Initialize Modal & Auth Triggers & Form Event Handlers
  */
 export function initAuth() {
   // Trigger buttons
   document.querySelectorAll('[data-action="open-login"]').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
+      clearAuthAlerts();
       openModal('login-modal');
     });
   });
@@ -240,6 +241,7 @@ export function initAuth() {
   document.querySelectorAll('[data-action="open-register"]').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
+      clearAuthAlerts();
       openModal('register-modal');
     });
   });
@@ -250,10 +252,71 @@ export function initAuth() {
     });
   });
 
-  // Login Form Submission Handler (Demo / Fallback Mode)
-  const loginForm = document.getElementById('login-form');
-  if (loginForm) {
-    loginForm.addEventListener('submit', (e) => {
+  // Auth Mode Tabs in Login Modal (Real Account vs Demo Mode)
+  document.querySelectorAll('[data-auth-tab]').forEach(tabBtn => {
+    tabBtn.addEventListener('click', (e) => {
+      const mode = e.currentTarget.getAttribute('data-auth-tab');
+      const realForm = document.getElementById('login-form');
+      const demoForm = document.getElementById('demo-login-form');
+
+      document.querySelectorAll('[data-auth-tab]').forEach(t => t.classList.remove('active'));
+      e.currentTarget.classList.add('active');
+
+      if (mode === 'real') {
+        if (realForm) realForm.style.display = 'block';
+        if (demoForm) demoForm.style.display = 'none';
+      } else {
+        if (realForm) realForm.style.display = 'none';
+        if (demoForm) demoForm.style.display = 'block';
+      }
+    });
+  });
+
+  // 1. Real Login Form Submission Handler (#login-form)
+  const realLoginForm = document.getElementById('login-form');
+  if (realLoginForm) {
+    realLoginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clearAuthAlerts();
+
+      const emailInput = document.getElementById('login-email');
+      const passwordInput = document.getElementById('login-password');
+      const submitBtn = document.getElementById('btn-submit-login');
+      const errorDiv = document.getElementById('login-auth-error');
+
+      const email = emailInput ? emailInput.value : '';
+      const password = passwordInput ? passwordInput.value : '';
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Signing In...';
+      }
+
+      const result = await loginUser(email, password);
+
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Sign In';
+      }
+
+      if (result.success) {
+        if (realLoginForm) realLoginForm.reset();
+        closeAllModals();
+        navigateToApp();
+      } else {
+        if (errorDiv) {
+          errorDiv.className = 'auth-alert error';
+          errorDiv.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> ${result.error || 'Authentication failed.'}`;
+          errorDiv.style.display = 'flex';
+        }
+      }
+    });
+  }
+
+  // 2. Demo Mode Login Form Handler (#demo-login-form)
+  const demoLoginForm = document.getElementById('demo-login-form');
+  if (demoLoginForm) {
+    demoLoginForm.addEventListener('submit', (e) => {
       e.preventDefault();
       // If real auth is active, do not allow demo switcher to override
       if (store.isRealAuth()) return;
@@ -264,6 +327,49 @@ export function initAuth() {
       }
       closeAllModals();
       navigateToApp();
+    });
+  }
+
+  // 3. Registration Form Handler (#register-form)
+  const registerForm = document.getElementById('register-form');
+  if (registerForm) {
+    registerForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clearAuthAlerts();
+
+      const fullName = document.getElementById('reg-fullname')?.value || '';
+      const email = document.getElementById('reg-email')?.value || '';
+      const password = document.getElementById('reg-password')?.value || '';
+      const confirmPassword = document.getElementById('reg-confirm-password')?.value || '';
+      const submitBtn = document.getElementById('btn-submit-register');
+      const msgDiv = document.getElementById('reg-auth-msg');
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Registering...';
+      }
+
+      const result = await registerUser(fullName, email, password, confirmPassword);
+
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i class="fa-solid fa-user-plus"></i> Create Account';
+      }
+
+      if (result.success) {
+        if (msgDiv) {
+          msgDiv.className = 'auth-alert success';
+          msgDiv.innerHTML = `<i class="fa-solid fa-circle-check"></i> Registration successful! You can now sign in with your credentials. (Note: Check your email for confirmation if required by your Supabase project settings).`;
+          msgDiv.style.display = 'flex';
+        }
+        if (registerForm) registerForm.reset();
+      } else {
+        if (msgDiv) {
+          msgDiv.className = 'auth-alert error';
+          msgDiv.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> ${result.error || 'Registration failed.'}`;
+          msgDiv.style.display = 'flex';
+        }
+      }
     });
   }
 
@@ -287,4 +393,14 @@ export function openModal(modalId) {
 export function closeAllModals() {
   document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'));
 }
+
+function clearAuthAlerts() {
+  document.querySelectorAll('.auth-alert').forEach(el => {
+    if (el.classList.contains('error') || el.classList.contains('success')) {
+      el.style.display = 'none';
+      el.textContent = '';
+    }
+  });
+}
+
 
