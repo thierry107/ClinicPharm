@@ -4,11 +4,11 @@
 
 import { store } from './store.js';
 import { initPublicPage } from './public.js';
-import { initAuth, closeAllModals } from './auth.js';
+import { initAuth, closeAllModals, checkExistingSession, initializeAuthListener } from './auth.js';
 import { initNavigation, renderActiveTab } from './navigation.js';
 import { testSupabaseConnection, isSupabaseReady } from './supabase-client.js';
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   // Initialize Subsystems
   initPublicPage();
   initAuth();
@@ -19,15 +19,14 @@ document.addEventListener('DOMContentLoaded', () => {
     renderActiveTab();
   });
 
-  // Supabase connectivity check (non-blocking, console-only)
-  // App continues in Demo Mode if Supabase is not yet configured.
-  testSupabaseConnection().then(() => {
-    if (isSupabaseReady()) {
-      console.info('[Curis Health] Supabase is ready. Future phases will connect store.js to the live database.');
-    } else {
-      console.info('[Curis Health] Running in Demo/Mock Mode — Supabase not yet configured (see js/config.js).');
-    }
-  });
+  // Supabase startup flow: check connectivity, restore session, and register auth state listener
+  if (isSupabaseReady()) {
+    await testSupabaseConnection();
+    await checkExistingSession();
+    initializeAuthListener();
+  } else {
+    console.info('[Curis Health] Running in Demo/Mock Mode — Supabase not yet configured (see js/config.js).');
+  }
 
   // Bind Form Submissions for Modals
   bindModalForms();

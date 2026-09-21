@@ -185,7 +185,7 @@ export async function fetchUserProfile(userId) {
 export async function logoutUser() {
   try {
     if (isSupabaseReady() && supabase) {
-      const { error } = await supabase.auth.signOut();
+      const { error } = await supabase.auth.signOut({ scope: 'local' });
       if (error) {
         console.warn('[Auth] Supabase signOut warning:', error.message);
       }
@@ -402,5 +402,123 @@ function clearAuthAlerts() {
     }
   });
 }
+
+/**
+ * 6. CHECK EXISTING SESSION
+ * Restores session on page load/refresh if Supabase Auth has a valid session.
+ * Fetches authoritative database profile and updates store & app navigation.
+ * Returns true if valid real session was restored, false otherwise.
+ * @returns {Promise<boolean>}
+ */
+export async function checkExistingSession() {
+  if (!isSupabaseReady() || !supabase) return false;
+
+  try {
+    const { data: { session }, error } = await supabase.auth.getSession();
+    if (error) {
+      console.warn('[Auth] Error retrieving existing session:', error.message);
+      return false;
+    }
+
+    if (session && session.user) {
+      const user = session.user;
+      let profile = await fetchUserProfile(user.id);
+      if (!profile) {
+        profile = {
+          id: user.id,
+          role: user.user_metadata?.role || 'patient',
+          full_name: user.user_metadata?.full_name || user.email || 'Curis User',
+          email: user.email
+        };
+      }
+      handleAuthenticatedUser(user, profile);
+      navigateToApp();
+      return true;
+    }
+  } catch (err) {
+    console.error('[Auth] Unexpected error checking existing session:', err);
+  }
+  return false;
+}
+
+/**
+ * 7. AUTH STATE CHANGE LISTENER
+ * Subscribes to Supabase Auth state changes.
+ * Handles INITIAL_SESSION, SIGNED_IN, SIGNED_OUT, TOKEN_REFRESHED, USER_UPDATED.
+ */
+export function initializeAuthListener() {
+  if (!isSupabaseReady() || !supabase) return;
+
+  supabase.auth.onAuthStateChange(async (event, session) => {
+    console.info(`[Auth] Auth state change event: ${event}`);
+
+    switch (event) {
+      case 'INITIAL_SESSION':
+        if (session && session.user) {
+          const currentUser = store.getCurrentUser();
+          if (!store.isRealAuth() || currentUser?.id !== session.user.id) {
+            const user = session.user;
+            let profile = await fetchUserProfile(user.id);
+            if (!profile) {
+              profile = {
+                id: user.id,
+                role: user.user_metadata?.role || 'patient',
+                full_name: user.user_metadata?.full_name || user.email || 'Curis User',
+                email: user.email
+              };
+            }
+            handleAuthenticatedUser(user, profile);
+            navigateToApp();
+          }
+        }
+        break;
+
+      case 'SIGNED_IN':
+        if (session && session.user) {
+          const currentUser = store.getCurrentUser();
+          if (!store.isRealAuth() || currentUser?.id !== session.user.id) {
+            const user = session.user;
+            let profile = await fetchUserProfile(user.id);
+            if (!profile) {
+              profile = {
+                id: user.id,
+                role: user.user_metadata?.role || 'patient',
+                full_name: user.user_metadata?.full_name || user.email || 'Curis User',
+                email: user.email
+              };
+            }
+            handleAuthenticatedUser(user, profile);
+            navigateToApp();
+          }
+        }
+        break;
+
+      case 'SIGNED_OUT':
+        if (store.isRealAuth()) {
+          store.clearAuthenticatedUser();
+          navigateToPublic();
+        }
+        break;
+
+      case 'TOKEN_REFRESHED':
+        console.info('[Auth] Session token refreshed successfully.');
+        break;
+
+      case 'USER_UPDATED':
+        if (session && session.user && store.isRealAuth()) {
+          const user = session.user;
+          let profile = await fetchUserProfile(user.id);
+          if (profile) {
+            handleAuthenticatedUser(user, profile);
+          }
+        }
+        break;
+
+      default:
+        break;
+    }
+  });
+}
+
 
 
