@@ -3,6 +3,7 @@
  */
 
 import { store } from './store.js';
+import { esc, showToast } from './ui.js';
 
 let currentCart = [];
 let selectedPatientName = 'Walk-in Customer';
@@ -48,7 +49,7 @@ export function renderPosView(container, role) {
           <label>Select Patient / Customer</label>
           <select id="pos-patient-select">
             <option value="Walk-in Customer">Walk-in Customer</option>
-            ${patients.map(p => `<option value="${p.name}">${p.name} (ID: ${p.id})</option>`).join('')}
+            ${patients.map(p => `<option value="${esc(p.name)}">${esc(p.name)} (ID: ${esc(p.id)})</option>`).join('')}
           </select>
         </div>
 
@@ -125,7 +126,7 @@ export function renderPosView(container, role) {
 
   document.getElementById('btn-complete-pos')?.addEventListener('click', () => {
     if (currentCart.length === 0) {
-      alert('⚠️ Cart is empty! Add items first.');
+      showToast('Cart is empty! Add items first.', 'warning');
       return;
     }
 
@@ -155,9 +156,9 @@ export function renderPosView(container, role) {
 
 function renderPosMedCards(medicines) {
   return medicines.map(m => `
-    <div class="feature-card pos-med-card" data-med-id="${m.id}" style="padding: 1.25rem; cursor: pointer;">
-      <div style="font-weight: 700; font-size: 0.95rem; margin-bottom: 0.25rem;">${m.name}</div>
-      <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.75rem;">${m.category} • Stock: <strong>${m.stock}</strong></div>
+    <div class="feature-card pos-med-card" data-med-id="${esc(m.id)}" style="padding: 1.25rem; cursor: pointer;">
+      <div style="font-weight: 700; font-size: 0.95rem; margin-bottom: 0.25rem;">${esc(m.name)}</div>
+      <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.75rem;">${esc(m.category)} • Stock: <strong>${esc(m.stock)}</strong></div>
       <div style="display: flex; justify-content: space-between; align-items: center;">
         <span style="font-weight: 800; color: var(--emerald); font-size: 1.1rem;">KSh ${m.unitPrice.toFixed(2)}</span>
         <button class="btn btn-sm btn-cyan"><i class="fa-solid fa-plus"></i> Add</button>
@@ -174,7 +175,7 @@ function bindMedCardListeners() {
       if (!med) return;
 
       if (med.stock <= 0) {
-        alert(`❌ ${med.name} is out of stock!`);
+        showToast(`${med.name} is out of stock!`, 'error');
         return;
       }
 
@@ -184,7 +185,7 @@ function bindMedCardListeners() {
           existing.qty += 1;
           existing.total = existing.qty * existing.price;
         } else {
-          alert(`⚠️ Cannot add more than available stock (${med.stock}).`);
+          showToast(`Cannot add more than available stock (${med.stock}).`, 'warning');
         }
       } else {
         currentCart.push({
@@ -221,8 +222,8 @@ function updateCartUI() {
 
   cartBody.innerHTML = currentCart.map((item, index) => `
     <tr style="border-bottom: 1px solid var(--border-color);">
-      <td style="padding: 0.5rem 0; font-weight: 600;">${item.medicineName}</td>
-      <td style="padding: 0.5rem 0; text-align: center;">${item.qty}</td>
+      <td style="padding: 0.5rem 0; font-weight: 600;">${esc(item.medicineName)}</td>
+      <td style="padding: 0.5rem 0; text-align: center;">${esc(item.qty)}</td>
       <td style="padding: 0.5rem 0; text-align: right; color: var(--emerald); font-weight: 700;">KSh ${item.total.toFixed(2)}</td>
       <td style="padding: 0.5rem 0; text-align: right;">
         <button style="background:none; border:none; color:var(--rose); cursor:pointer;" onclick="window.removeCartItem(${index})"><i class="fa-solid fa-trash"></i></button>
@@ -253,14 +254,14 @@ function openReceiptModal(sale) {
     <div style="text-align: center; border-bottom: 2px dashed #333; padding-bottom: 1rem; margin-bottom: 1rem;">
       <h2 style="font-weight: 800; font-size: 1.4rem;">CURIS HEALTH KENYA</h2>
       <p style="font-size: 0.85rem;">Integrated Clinic & Chemist Platform</p>
-      <div style="font-size: 0.8rem; margin-top: 0.5rem;">Receipt No: <strong>${sale.receiptNo}</strong></div>
-      <div style="font-size: 0.8rem;">Date: ${sale.date} • Time: ${sale.time}</div>
+      <div style="font-size: 0.8rem; margin-top: 0.5rem;">Receipt No: <strong>${esc(sale.receiptNo)}</strong></div>
+      <div style="font-size: 0.8rem;">Date: ${esc(sale.date)} • Time: ${esc(sale.time)}</div>
     </div>
 
     <div style="font-size: 0.85rem; margin-bottom: 1rem;">
-      <div>Customer / Patient: <strong>${sale.patientName}</strong></div>
-      <div>Payment Method: <strong>${sale.paymentMethod}</strong></div>
-      <div>Processed By: ${sale.processedBy}</div>
+      <div>Customer / Patient: <strong>${esc(sale.patientName)}</strong></div>
+      <div>Payment Method: <strong>${esc(sale.paymentMethod)}</strong></div>
+      <div>Processed By: ${esc(sale.processedBy)}</div>
     </div>
 
     <table style="width: 100%; font-size: 0.85rem; border-collapse: collapse; margin-bottom: 1rem;">
@@ -274,8 +275,8 @@ function openReceiptModal(sale) {
       <tbody>
         ${sale.items.map(item => `
           <tr style="border-bottom: 1px solid #eee;">
-            <td style="padding: 0.4rem 0;">${item.medicineName}</td>
-            <td style="padding: 0.4rem 0; text-align: center;">${item.qty}</td>
+            <td style="padding: 0.4rem 0;">${esc(item.medicineName)}</td>
+            <td style="padding: 0.4rem 0; text-align: center;">${esc(item.qty)}</td>
             <td style="padding: 0.4rem 0; text-align: right;">KSh ${item.total.toFixed(2)}</td>
           </tr>
         `).join('')}

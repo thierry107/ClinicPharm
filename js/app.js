@@ -7,6 +7,7 @@ import { initPublicPage } from './public.js';
 import { initAuth, closeAllModals, checkExistingSession, initializeAuthListener } from './auth.js';
 import { initNavigation, renderActiveTab } from './navigation.js';
 import { testSupabaseConnection, isSupabaseReady } from './supabase-client.js';
+import { showToast } from './ui.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
   // Initialize Subsystems
@@ -56,7 +57,7 @@ function bindModalForms() {
         }
       });
 
-      alert(`✅ Patient ${newPatient.name} registered successfully with ID ${newPatient.id}!`);
+      showToast(`Patient ${newPatient.name} registered successfully with ID ${newPatient.id}!`, 'success');
       closeAllModals();
       addPatientForm.reset();
     });
@@ -84,7 +85,7 @@ function bindModalForms() {
         notes: document.getElementById('apt-notes').value || "Routine appointment"
       });
 
-      alert(`✅ Appointment ${newApt.id} scheduled for ${newApt.patientName}!`);
+      showToast(`Appointment ${newApt.id} scheduled for ${newApt.patientName}!`, 'success');
       closeAllModals();
       bookAptForm.reset();
     });
@@ -109,7 +110,7 @@ function bindModalForms() {
         notes: document.getElementById('con-notes').value
       });
 
-      alert(`✅ Consultation record ${con.id} saved!\nRedirecting to Prescription Queue to issue medicines...`);
+      showToast(`Consultation record ${con.id} saved!\nRedirecting to Prescription Queue to issue medicines...`, 'success');
       closeAllModals();
       window.navigateToTab('prescriptions');
     }
@@ -148,7 +149,7 @@ function bindModalForms() {
         ]
       });
 
-      alert(`✅ Prescription ${rx.id} issued to Chemist Dispensing Queue for ${rx.patientName}!`);
+      showToast(`Prescription ${rx.id} issued to Chemist Dispensing Queue for ${rx.patientName}!`, 'success');
       closeAllModals();
       createRxForm.reset();
     });
@@ -171,7 +172,7 @@ function bindModalForms() {
         description: document.getElementById('med-description').value || "Pharmaceutical medication"
       });
 
-      alert(`✅ Medicine ${med.name} added to inventory catalog!`);
+      showToast(`Medicine ${med.name} added to inventory catalog!`, 'success');
       closeAllModals();
       addMedForm.reset();
     });

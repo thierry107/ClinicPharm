@@ -3,6 +3,7 @@
  */
 
 import { store } from './store.js';
+import { esc } from './ui.js';
 
 export function renderAnalyticsView(container, role) {
   const sales = store.getSales();
@@ -74,13 +75,13 @@ export function renderAnalyticsView(container, role) {
             <tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 2rem;">No transaction ledger records.</td></tr>
           ` : sales.map(s => `
             <tr>
-              <td style="font-weight: 700; color: var(--cyan);">${s.receiptNo}</td>
-              <td style="font-size: 0.85rem; color: var(--text-secondary);">${s.date} ${s.time}</td>
-              <td style="font-weight: 600;">${s.patientName}</td>
+              <td style="font-weight: 700; color: var(--cyan);">${esc(s.receiptNo)}</td>
+              <td style="font-size: 0.85rem; color: var(--text-secondary);">${esc(s.date)} ${esc(s.time)}</td>
+              <td style="font-weight: 600;">${esc(s.patientName)}</td>
               <td>${s.items.length} items</td>
-              <td><span class="status-badge active">${s.paymentMethod}</span></td>
+              <td><span class="status-badge active">${esc(s.paymentMethod)}</span></td>
               <td style="font-weight: 700; color: var(--emerald);">KSh ${s.totalAmount.toFixed(2)}</td>
-              <td><span class="status-badge paid">${s.paymentStatus}</span></td>
+              <td><span class="status-badge paid">${esc(s.paymentStatus)}</span></td>
             </tr>
           `).join('')}
         </tbody>

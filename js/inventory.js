@@ -3,6 +3,7 @@
  */
 
 import { store } from './store.js';
+import { esc, showToast } from './ui.js';
 
 export function renderInventoryView(container, role) {
   const medicines = store.getMedicines();
@@ -81,12 +82,12 @@ export function renderInventoryView(container, role) {
           <tbody>
             ${suppliers.map(s => `
               <tr>
-                <td style="font-weight: 700;">${s.name}</td>
-                <td>${s.contactPerson}</td>
-                <td>${s.phone}</td>
-                <td style="color:var(--cyan);">${s.email}</td>
-                <td>${s.leadTimeDays} days</td>
-                <td><span class="status-badge active"><i class="fa-solid fa-star" style="color:var(--amber);"></i> ${s.rating}</span></td>
+                <td style="font-weight: 700;">${esc(s.name)}</td>
+                <td>${esc(s.contactPerson)}</td>
+                <td>${esc(s.phone)}</td>
+                <td style="color:var(--cyan);">${esc(s.email)}</td>
+                <td>${esc(s.leadTimeDays)} days</td>
+                <td><span class="status-badge active"><i class="fa-solid fa-star" style="color:var(--amber);"></i> ${esc(s.rating)}</span></td>
               </tr>
             `).join('')}
           </tbody>
@@ -124,22 +125,22 @@ function renderInventoryRows(medicines, role) {
     return `
       <tr>
         <td>
-          <div style="font-weight: 700; color: var(--text-primary);">${m.name}</div>
-          <div style="font-size: 0.78rem; color: var(--text-muted);">${m.sku} • Batch: ${m.batchNo}</div>
+          <div style="font-weight: 700; color: var(--text-primary);">${esc(m.name)}</div>
+          <div style="font-size: 0.78rem; color: var(--text-muted);">${esc(m.sku)} • Batch: ${esc(m.batchNo)}</div>
         </td>
-        <td><span class="status-badge active">${m.category}</span></td>
+        <td><span class="status-badge active">${esc(m.category)}</span></td>
         <td>
           <span style="font-size: 1.05rem; font-weight: 700; color: ${isLow ? 'var(--rose)' : 'var(--emerald)'};">
-            ${m.stock} units
+            ${esc(m.stock)} units
           </span>
           ${isLow ? `<span class="status-badge low-stock" style="margin-left:0.4rem;">Low Stock</span>` : ''}
         </td>
         <td style="font-weight: 700; color: var(--emerald);">KSh ${m.unitPrice.toFixed(2)}</td>
-        <td style="font-size: 0.825rem; color: var(--text-secondary);">${m.expiryDate}</td>
-        <td style="font-size: 0.85rem; color: var(--text-muted);">${m.supplier}</td>
+        <td style="font-size: 0.825rem; color: var(--text-secondary);">${esc(m.expiryDate)}</td>
+        <td style="font-size: 0.85rem; color: var(--text-muted);">${esc(m.supplier)}</td>
         <td>
           ${role === 'admin' || role === 'chemist' ? `
-            <button class="btn btn-sm btn-secondary" onclick="window.quickRestock('${m.id}')"><i class="fa-solid fa-boxes-packing"></i> Restock +50</button>
+            <button class="btn btn-sm btn-secondary" onclick="window.quickRestock('${esc(m.id)}')"><i class="fa-solid fa-boxes-packing"></i> Restock +50</button>
           ` : `<span style="font-size: 0.8rem; color: var(--text-muted);">Available</span>`}
         </td>
       </tr>
@@ -149,5 +150,5 @@ function renderInventoryRows(medicines, role) {
 
 window.quickRestock = (medId) => {
   store.updateStock(medId, 50);
-  alert('✅ Restocked 50 units successfully!');
+  showToast('Restocked 50 units successfully!', 'success');
 };

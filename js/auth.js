@@ -6,6 +6,34 @@
 import { store } from './store.js';
 import { navigateToApp, navigateToPublic } from './navigation.js';
 import { supabase, isSupabaseReady } from './supabase-client.js';
+import { esc } from './ui.js';
+
+// ---------------------------------------------------------------------------
+// ROLE SAFETY
+// The role shown in the UI must come from public.profiles.role (set by the
+// database; only admins can change it). user_metadata is editable by the user
+// themselves, so it is NEVER used for the role.
+// ---------------------------------------------------------------------------
+const ALLOWED_ROLES = ['admin', 'doctor', 'chemist', 'patient'];
+
+function normalizeRole(role) {
+  const r = typeof role === 'string' ? role.toLowerCase() : '';
+  return ALLOWED_ROLES.includes(r) ? r : 'patient';
+}
+
+/**
+ * Used when the profile row could not be loaded. Always the least-privileged role.
+ * Display name may come from metadata (cosmetic only).
+ */
+function buildFallbackProfile(user) {
+  return {
+    id: user.id,
+    role: 'patient',
+    full_name: user.user_metadata?.full_name || user.email || 'Curis User',
+    email: user.email
+  };
+}
+
 
 /**
  * 1. REAL REGISTRATION
@@ -118,12 +146,7 @@ export async function loginUser(email, password) {
     // Fetch authoritative user profile from database
     let profile = await fetchUserProfile(user.id);
     if (!profile) {
-      profile = {
-        id: user.id,
-        role: user.user_metadata?.role || 'patient',
-        full_name: user.user_metadata?.full_name || user.email || 'Curis User',
-        email: user.email
-      };
+      profile = buildFallbackProfile(user);
     }
 
     // Store in application state architecture
@@ -208,7 +231,7 @@ export async function logoutUser() {
 export function handleAuthenticatedUser(user, profile) {
   if (!user) return;
 
-  const role = (profile?.role || user.user_metadata?.role || 'patient').toLowerCase();
+  const role = normalizeRole(profile?.role);
   const fullName = profile?.full_name || user.user_metadata?.full_name || user.email || 'Curis User';
   const email = profile?.email || user.email || '';
 
@@ -306,7 +329,7 @@ export function initAuth() {
       } else {
         if (errorDiv) {
           errorDiv.className = 'auth-alert error';
-          errorDiv.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> ${result.error || 'Authentication failed.'}`;
+          errorDiv.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> ${esc(result.error || 'Authentication failed.')}`;
           errorDiv.style.display = 'flex';
         }
       }
@@ -366,7 +389,7 @@ export function initAuth() {
       } else {
         if (msgDiv) {
           msgDiv.className = 'auth-alert error';
-          msgDiv.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> ${result.error || 'Registration failed.'}`;
+          msgDiv.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> ${esc(result.error || 'Registration failed.')}`;
           msgDiv.style.display = 'flex';
         }
       }
@@ -424,12 +447,7 @@ export async function checkExistingSession() {
       const user = session.user;
       let profile = await fetchUserProfile(user.id);
       if (!profile) {
-        profile = {
-          id: user.id,
-          role: user.user_metadata?.role || 'patient',
-          full_name: user.user_metadata?.full_name || user.email || 'Curis User',
-          email: user.email
-        };
+        profile = buildFallbackProfile(user);
       }
       handleAuthenticatedUser(user, profile);
       navigateToApp();
@@ -460,12 +478,7 @@ export function initializeAuthListener() {
             const user = session.user;
             let profile = await fetchUserProfile(user.id);
             if (!profile) {
-              profile = {
-                id: user.id,
-                role: user.user_metadata?.role || 'patient',
-                full_name: user.user_metadata?.full_name || user.email || 'Curis User',
-                email: user.email
-              };
+              profile = buildFallbackProfile(user);
             }
             handleAuthenticatedUser(user, profile);
             navigateToApp();
@@ -480,12 +493,7 @@ export function initializeAuthListener() {
             const user = session.user;
             let profile = await fetchUserProfile(user.id);
             if (!profile) {
-              profile = {
-                id: user.id,
-                role: user.user_metadata?.role || 'patient',
-                full_name: user.user_metadata?.full_name || user.email || 'Curis User',
-                email: user.email
-              };
+              profile = buildFallbackProfile(user);
             }
             handleAuthenticatedUser(user, profile);
             navigateToApp();

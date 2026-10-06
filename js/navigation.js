@@ -10,6 +10,7 @@ import { renderInventoryView } from './inventory.js';
 import { renderPosView } from './pos.js';
 import { renderAnalyticsView } from './analytics.js';
 import { getAvatarUrl } from './avatar.js';
+import { esc } from './ui.js';
 
 let activeTab = 'dashboard';
 
@@ -84,7 +85,7 @@ export function updateRoleUI() {
   if (roleEl) roleEl.textContent = user.title || role.toUpperCase();
   if (avatarEl) {
     avatarEl.src = getAvatarUrl(user);
-    avatarEl.alt = `${user.name || 'User'} Profile Photo`;
+    avatarEl.alt = `${esc(user.name || 'User')} Profile Photo`;
   }
 
   // Update Role Pills
@@ -285,7 +286,7 @@ function renderDashboardView(container, role) {
   container.innerHTML = `
     <div class="dashboard-header-bar">
       <div>
-        <h2 style="font-size: 1.75rem; font-weight: 800;">Welcome back, ${store.getCurrentUser().name}</h2>
+        <h2 style="font-size: 1.75rem; font-weight: 800;">Welcome back, ${esc(store.getCurrentUser().name)}</h2>
         <p style="color: var(--text-secondary); font-size: 0.9rem;">Live Clinic & Chemist operational summary.</p>
       </div>
       ${role === 'admin' ? `
@@ -357,12 +358,12 @@ function renderDashboardView(container, role) {
           <tbody>
             ${prescriptions.slice(0, 4).map(rx => `
               <tr>
-                <td style="font-weight: 700; color: var(--cyan);">${rx.id}</td>
-                <td>${rx.patientName}</td>
-                <td><span class="status-badge ${rx.status === 'Dispensed' ? 'dispensed' : 'pending'}">${rx.status}</span></td>
+                <td style="font-weight: 700; color: var(--cyan);">${esc(rx.id)}</td>
+                <td>${esc(rx.patientName)}</td>
+                <td><span class="status-badge ${rx.status === 'Dispensed' ? 'dispensed' : 'pending'}">${esc(rx.status)}</span></td>
                 <td>
                   ${rx.status === 'Pending Dispense' && (role === 'admin' || role === 'chemist') ? `
-                    <button class="btn btn-sm btn-primary" onclick="window.dispenseRxDirect('${rx.id}')"><i class="fa-solid fa-box-open"></i> Dispense</button>
+                    <button class="btn btn-sm btn-primary" onclick="window.dispenseRxDirect('${esc(rx.id)}')"><i class="fa-solid fa-box-open"></i> Dispense</button>
                   ` : `<span style="font-size: 0.8rem; color: var(--text-muted);">Filled</span>`}
                 </td>
               </tr>
@@ -388,10 +389,10 @@ function renderDashboardView(container, role) {
           <tbody>
             ${patients.slice(0, 4).map(pat => `
               <tr>
-                <td style="font-weight: 600;">${pat.name}</td>
-                <td><span class="status-badge active">${pat.bloodGroup}</span></td>
-                <td style="font-size: 0.8rem; color: var(--rose);">${pat.allergies.join(', ')}</td>
-                <td style="font-weight: 600; font-size: 0.8rem; color: var(--cyan);">${pat.vitals?.bp || 'N/A'}</td>
+                <td style="font-weight: 600;">${esc(pat.name)}</td>
+                <td><span class="status-badge active">${esc(pat.bloodGroup)}</span></td>
+                <td style="font-size: 0.8rem; color: var(--rose);">${esc(pat.allergies.join(', '))}</td>
+                <td style="font-weight: 600; font-size: 0.8rem; color: var(--cyan);">${esc(pat.vitals?.bp || 'N/A')}</td>
               </tr>
             `).join('')}
           </tbody>

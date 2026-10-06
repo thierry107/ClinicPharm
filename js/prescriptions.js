@@ -3,6 +3,7 @@
  */
 
 import { store } from './store.js';
+import { esc, showToast } from './ui.js';
 
 export function renderPrescriptionsView(container, role) {
   const prescriptions = store.getPrescriptions();
@@ -56,23 +57,23 @@ function renderRxRows(prescriptions, role) {
 
   return prescriptions.map(rx => `
     <tr>
-      <td style="font-weight: 700; color: var(--cyan);">${rx.id}</td>
-      <td style="font-weight: 600;">${rx.patientName}</td>
-      <td style="font-size: 0.85rem; color: var(--text-secondary);">${rx.doctorName}</td>
+      <td style="font-weight: 700; color: var(--cyan);">${esc(rx.id)}</td>
+      <td style="font-weight: 600;">${esc(rx.patientName)}</td>
+      <td style="font-size: 0.85rem; color: var(--text-secondary);">${esc(rx.doctorName)}</td>
       <td>
         <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
           ${rx.items.map(i => `
-            <li><i class="fa-solid fa-pills" style="color:var(--emerald); font-size:0.75rem;"></i> <strong>${i.medicineName}</strong> (Qty: ${i.quantity}) - <span style="color:var(--text-muted);">${i.frequency}</span></li>
+            <li><i class="fa-solid fa-pills" style="color:var(--emerald); font-size:0.75rem;"></i> <strong>${esc(i.medicineName)}</strong> (Qty: ${esc(i.quantity)}) - <span style="color:var(--text-muted);">${esc(i.frequency)}</span></li>
           `).join('')}
         </ul>
       </td>
-      <td style="font-size: 0.825rem; color: var(--text-muted);">${rx.date}</td>
+      <td style="font-size: 0.825rem; color: var(--text-muted);">${esc(rx.date)}</td>
       <td>
-        <span class="status-badge ${rx.status === 'Dispensed' ? 'dispensed' : 'pending'}">${rx.status}</span>
+        <span class="status-badge ${rx.status === 'Dispensed' ? 'dispensed' : 'pending'}">${esc(rx.status)}</span>
       </td>
       <td>
         ${rx.status === 'Pending Dispense' && (role === 'admin' || role === 'chemist') ? `
-          <button class="btn btn-sm btn-primary dispense-rx-btn" data-rx-id="${rx.id}">
+          <button class="btn btn-sm btn-primary dispense-rx-btn" data-rx-id="${esc(rx.id)}">
             <i class="fa-solid fa-cart-shopping"></i> Dispense & Update Stock
           </button>
         ` : `
@@ -96,11 +97,11 @@ function bindRxActionListeners() {
 window.dispenseRxDirect = (rxId) => {
   const result = store.dispensePrescription(rxId, 'Cash');
   if (result.success) {
-    alert(`✅ SUCCESS:\n${result.message}\nReceipt No: ${result.sale.receiptNo}\nTotal Charged: KSh ${result.sale.totalAmount.toFixed(2)}`);
+    showToast(`SUCCESS:\n${result.message}\nReceipt No: ${result.sale.receiptNo}\nTotal Charged: KSh ${result.sale.totalAmount.toFixed(2)}`, 'success');
     window.location.hash = ''; // Trigger re-render
     store.notify();
   } else {
-    alert(`❌ ERROR: ${result.message}`);
+    showToast(`ERROR: ${result.message}`, 'error');
   }
 };
 
@@ -110,10 +111,10 @@ function openCreateRxModal() {
   const medSelect = document.getElementById('rx-medicine-select');
 
   if (patientSelect) {
-    patientSelect.innerHTML = store.getPatients().map(p => `<option value="${p.id}" data-name="${p.name}">${p.name}</option>`).join('');
+    patientSelect.innerHTML = store.getPatients().map(p => `<option value="${esc(p.id)}" data-name="${esc(p.name)}">${esc(p.name)}</option>`).join('');
   }
   if (medSelect) {
-    medSelect.innerHTML = store.getMedicines().map(m => `<option value="${m.id}" data-name="${m.name}" data-price="${m.unitPrice}">${m.name} (Stock: ${m.stock}, KSh ${m.unitPrice.toFixed(2)})</option>`).join('');
+    medSelect.innerHTML = store.getMedicines().map(m => `<option value="${esc(m.id)}" data-name="${esc(m.name)}" data-price="${esc(m.unitPrice)}">${esc(m.name)} (Stock: ${esc(m.stock)}, KSh ${m.unitPrice.toFixed(2)})</option>`).join('');
   }
 
   if (modal) modal.classList.add('active');

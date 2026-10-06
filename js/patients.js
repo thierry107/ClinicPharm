@@ -3,6 +3,7 @@
  */
 
 import { store } from './store.js';
+import { esc } from './ui.js';
 
 export function renderPatientsView(container, role) {
   const patients = store.getPatients();
@@ -78,20 +79,20 @@ function renderPatientRows(patients, role) {
 
   return patients.map(p => `
     <tr>
-      <td style="font-weight: 700; color: var(--cyan);">${p.id}</td>
+      <td style="font-weight: 700; color: var(--cyan);">${esc(p.id)}</td>
       <td>
-        <div style="font-weight: 600;">${p.name}</div>
-        <div style="font-size: 0.78rem; color: var(--text-muted);">${p.gender}, ${p.age} yrs • ${p.phone}</div>
+        <div style="font-weight: 600;">${esc(p.name)}</div>
+        <div style="font-size: 0.78rem; color: var(--text-muted);">${esc(p.gender)}, ${esc(p.age)} yrs • ${esc(p.phone)}</div>
       </td>
-      <td><span class="status-badge active">${p.bloodGroup}</span></td>
-      <td><span style="color: var(--rose); font-size: 0.825rem; font-weight: 600;">${p.allergies.join(', ')}</span></td>
-      <td style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 0.85rem;">${p.medicalHistory}</td>
+      <td><span class="status-badge active">${esc(p.bloodGroup)}</span></td>
+      <td><span style="color: var(--rose); font-size: 0.825rem; font-weight: 600;">${esc(p.allergies.join(', '))}</span></td>
+      <td style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 0.85rem;">${esc(p.medicalHistory)}</td>
       <td>
-        <div style="font-size: 0.8rem; font-weight: 600; color: var(--emerald);">BP: ${p.vitals?.bp || 'N/A'}</div>
-        <div style="font-size: 0.75rem; color: var(--text-muted);">HR: ${p.vitals?.pulse || 'N/A'} bpm</div>
+        <div style="font-size: 0.8rem; font-weight: 600; color: var(--emerald);">BP: ${esc(p.vitals?.bp || 'N/A')}</div>
+        <div style="font-size: 0.75rem; color: var(--text-muted);">HR: ${esc(p.vitals?.pulse || 'N/A')} bpm</div>
       </td>
       <td>
-        <button class="btn btn-sm btn-secondary view-medical-record-btn" data-patient-id="${p.id}"><i class="fa-solid fa-notes-medical"></i> View Record</button>
+        <button class="btn btn-sm btn-secondary view-medical-record-btn" data-patient-id="${esc(p.id)}"><i class="fa-solid fa-notes-medical"></i> View Record</button>
       </td>
     </tr>
   `).join('');
@@ -116,10 +117,10 @@ function openMedicalRecordModal(patientId) {
   body.innerHTML = `
     <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem;">
       <div>
-        <h3 style="font-size: 1.3rem; font-weight: 800; color: var(--emerald);">${patient.name}</h3>
-        <p style="color: var(--text-secondary); font-size: 0.85rem;">ID: ${patient.id} • ${patient.gender}, ${patient.age} years • Blood Group: <strong>${patient.bloodGroup}</strong></p>
+        <h3 style="font-size: 1.3rem; font-weight: 800; color: var(--emerald);">${esc(patient.name)}</h3>
+        <p style="color: var(--text-secondary); font-size: 0.85rem;">ID: ${esc(patient.id)} • ${esc(patient.gender)}, ${esc(patient.age)} years • Blood Group: <strong>${esc(patient.bloodGroup)}</strong></p>
       </div>
-      <span class="status-badge active">${patient.status}</span>
+      <span class="status-badge active">${esc(patient.status)}</span>
     </div>
 
     <!-- Vital Signs Card Grid -->
@@ -127,32 +128,32 @@ function openMedicalRecordModal(patientId) {
     <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; margin-bottom: 1.5rem;">
       <div style="background: rgba(15,23,42,0.6); padding: 0.75rem; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
         <div style="font-size: 0.75rem; color: var(--text-muted);">Blood Pressure</div>
-        <div style="font-weight: 700; font-size: 1.1rem; color: var(--text-primary);">${patient.vitals?.bp}</div>
+        <div style="font-weight: 700; font-size: 1.1rem; color: var(--text-primary);">${esc(patient.vitals?.bp)}</div>
       </div>
       <div style="background: rgba(15,23,42,0.6); padding: 0.75rem; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
         <div style="font-size: 0.75rem; color: var(--text-muted);">Pulse Rate</div>
-        <div style="font-weight: 700; font-size: 1.1rem; color: var(--emerald);">${patient.vitals?.pulse} bpm</div>
+        <div style="font-weight: 700; font-size: 1.1rem; color: var(--emerald);">${esc(patient.vitals?.pulse)} bpm</div>
       </div>
       <div style="background: rgba(15,23,42,0.6); padding: 0.75rem; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
         <div style="font-size: 0.75rem; color: var(--text-muted);">Temperature</div>
-        <div style="font-weight: 700; font-size: 1.1rem; color: var(--amber);">${patient.vitals?.temp}</div>
+        <div style="font-weight: 700; font-size: 1.1rem; color: var(--amber);">${esc(patient.vitals?.temp)}</div>
       </div>
       <div style="background: rgba(15,23,42,0.6); padding: 0.75rem; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
         <div style="font-size: 0.75rem; color: var(--text-muted);">Weight</div>
-        <div style="font-weight: 700; font-size: 1.1rem; color: var(--indigo);">${patient.vitals?.weight}</div>
+        <div style="font-weight: 700; font-size: 1.1rem; color: var(--indigo);">${esc(patient.vitals?.weight)}</div>
       </div>
     </div>
 
     <!-- Medical History & Allergies -->
     <div style="margin-bottom: 1.5rem;">
       <h4 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 0.5rem;"><i class="fa-solid fa-file-medical"></i> Medical History</h4>
-      <p style="background: var(--bg-main); padding: 0.75rem; border-radius: var(--radius-md); font-size: 0.9rem;">${patient.medicalHistory}</p>
+      <p style="background: var(--bg-main); padding: 0.75rem; border-radius: var(--radius-md); font-size: 0.9rem;">${esc(patient.medicalHistory)}</p>
     </div>
 
     <div style="margin-bottom: 1.5rem;">
       <h4 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--rose);"><i class="fa-solid fa-allergies"></i> Allergies & Contraindications</h4>
       <p style="background: rgba(244,63,94,0.1); border: 1px solid rgba(244,63,94,0.3); padding: 0.75rem; border-radius: var(--radius-md); font-size: 0.9rem; color: var(--rose); font-weight: 600;">
-        ${patient.allergies.join(', ')}
+        ${esc(patient.allergies.join(', '))}
       </p>
     </div>
   `;

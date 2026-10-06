@@ -1,0 +1,18 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Environment and secrets (never commit service_role keys)
+.env
+.env.*
+*.pem
+
+# Supabase local files
+supabase/.temp/
+supabase/.branches/
+
+# Dependencies and build output (if you add a toolchain later)
+node_modules/
+dist/

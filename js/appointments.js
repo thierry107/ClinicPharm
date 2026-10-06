@@ -3,6 +3,7 @@
  */
 
 import { store } from './store.js';
+import { esc } from './ui.js';
 
 export function renderAppointmentsView(container, role) {
   const appointments = store.getAppointments();
@@ -52,15 +53,15 @@ function renderAppointmentRows(appointments, role) {
 
   return appointments.map(apt => `
     <tr>
-      <td style="font-weight: 700; color: var(--cyan);">${apt.id}</td>
-      <td style="font-weight: 600;">${apt.patientName}</td>
-      <td>${apt.doctorName}</td>
-      <td>${apt.date} • <span style="color:var(--text-secondary);">${apt.time}</span></td>
-      <td><span class="status-badge active">${apt.type}</span></td>
-      <td><span class="status-badge ${apt.status === 'Completed' ? 'completed' : (apt.status === 'In Consultation' ? 'in-consultation' : 'scheduled')}">${apt.status}</span></td>
+      <td style="font-weight: 700; color: var(--cyan);">${esc(apt.id)}</td>
+      <td style="font-weight: 600;">${esc(apt.patientName)}</td>
+      <td>${esc(apt.doctorName)}</td>
+      <td>${esc(apt.date)} • <span style="color:var(--text-secondary);">${esc(apt.time)}</span></td>
+      <td><span class="status-badge active">${esc(apt.type)}</span></td>
+      <td><span class="status-badge ${apt.status === 'Completed' ? 'completed' : (apt.status === 'In Consultation' ? 'in-consultation' : 'scheduled')}">${esc(apt.status)}</span></td>
       <td>
         ${apt.status !== 'Completed' && (role === 'doctor' || role === 'admin') ? `
-          <button class="btn btn-sm btn-cyan start-consultation-btn" data-apt-id="${apt.id}"><i class="fa-solid fa-stethoscope"></i> Start Consultation</button>
+          <button class="btn btn-sm btn-cyan start-consultation-btn" data-apt-id="${esc(apt.id)}"><i class="fa-solid fa-stethoscope"></i> Start Consultation</button>
         ` : `<span style="font-size: 0.8rem; color: var(--text-muted);">Viewed</span>`}
       </td>
     </tr>
@@ -82,10 +83,10 @@ function openBookAppointmentModal(patients, doctors) {
   const doctorSelect = document.getElementById('apt-doctor-select');
 
   if (patientSelect) {
-    patientSelect.innerHTML = patients.map(p => `<option value="${p.id}">${p.name} (${p.phone})</option>`).join('');
+    patientSelect.innerHTML = patients.map(p => `<option value="${esc(p.id)}">${esc(p.name)} (${esc(p.phone)})</option>`).join('');
   }
   if (doctorSelect) {
-    doctorSelect.innerHTML = doctors.map(d => `<option value="${d.id}">${d.name} - ${d.specialty}</option>`).join('');
+    doctorSelect.innerHTML = doctors.map(d => `<option value="${esc(d.id)}">${esc(d.name)} - ${esc(d.specialty)}</option>`).join('');
   }
 
   if (modal) modal.classList.add('active');
@@ -100,14 +101,14 @@ function openConsultationModal(aptId) {
 
   body.innerHTML = `
     <div style="margin-bottom: 1rem;">
-      <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--cyan);">Clinical Consultation: ${apt.patientName}</h3>
-      <p style="font-size: 0.85rem; color: var(--text-secondary);">Doctor: ${apt.doctorName} • Date: ${apt.date}</p>
+      <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--cyan);">Clinical Consultation: ${esc(apt.patientName)}</h3>
+      <p style="font-size: 0.85rem; color: var(--text-secondary);">Doctor: ${esc(apt.doctorName)} • Date: ${esc(apt.date)}</p>
     </div>
 
     <form id="consultation-record-form">
-      <input type="hidden" id="con-apt-id" value="${apt.id}">
-      <input type="hidden" id="con-pat-id" value="${apt.patientId}">
-      <input type="hidden" id="con-pat-name" value="${apt.patientName}">
+      <input type="hidden" id="con-apt-id" value="${esc(apt.id)}">
+      <input type="hidden" id="con-pat-id" value="${esc(apt.patientId)}">
+      <input type="hidden" id="con-pat-name" value="${esc(apt.patientName)}">
 
       <div class="form-group">
         <label>Chief Complaint / Symptoms</label>
